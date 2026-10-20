@@ -52,7 +52,8 @@ export interface RelayAdapter {
   propose(account: Account, draft: ProposalDraft): Promise<Proposal>;
   approve(account: Account, quote: FeeQuote, amount: bigint): Promise<Hex>;
   sponsor(account: Account, proposalId: string, maxFee: bigint, quote: FeeQuote): Promise<Sponsorship>;
-  retryRefused(account: Account, sponsorshipId: string, maxFee: bigint): Promise<Sponsorship>;
+  /** Identical-body retry after an authenticated status-1 refusal: a new funded attempt with a fresh quote and exact allowance. */
+  retryRefused(account: Account, sponsorshipId: string, maxFee: bigint, quote: FeeQuote): Promise<Sponsorship>;
   resubmitBinding(account: Account, sponsorshipId: string): Promise<Sponsorship>;
   fork(account: Account, input: { branchId: string; checkpointId: string; direction: string }): Promise<Branch>;
   reconcile(record: RecoveryRecord): Promise<Sponsorship | null>;

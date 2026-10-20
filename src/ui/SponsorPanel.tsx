@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import type { RelayAdapter } from "../domain/adapter";
-import { StaleProposalError, type Account, type Branch, type Checkpoint, type FeeQuote, type Proposal } from "../domain/types";
+import { StaleProposalError, type Account, type Branch, type Checkpoint, type FeeQuote, type Proposal, type Sponsorship } from "../domain/types";
 import { CopyId, KIND_LABEL, formatTime, formatUnits, parseUnits } from "./format";
 import { saveRecovery } from "./recovery";
 import { useActionScope } from "./actionScope";
 
-interface Props { adapter: RelayAdapter; account: Account; branch: Branch; proposal: Proposal; latest: Checkpoint; onDone: () => void }
+interface Props {
+  adapter: RelayAdapter; account: Account; branch: Branch; proposal: Proposal; latest: Checkpoint; onDone: () => void;
+  /** A status-1 refused attempt: the same review, fresh quote and exact allowance, then an identical-body retry. */
+  retryOf?: Sponsorship;
+}
 
 /** Preview and two-step sponsorship: exact allowance to the A1 Branch, then purchase. Refreshes anchor and fee before each signature. */
-export function SponsorPanel({ adapter, account, branch, proposal, latest, onDone }: Props) {
+export function SponsorPanel({ adapter, account, branch, proposal, latest, onDone, retryOf }: Props) {
   const [quote, setQuote] = useState<FeeQuote | null>(null);
   const [maxFee, setMaxFee] = useState("");
   const [step, setStep] = useState<"review" | "approved">("review");
@@ -57,7 +61,9 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
           setStep("review");
           throw new Error("当前价格高于已确认的授权额度，请重新授权当前精确价格");
         }
-        const sp = await adapter.sponsor(account, proposal.id, maxFeeWei, q);
+        const sp = retryOf
+          ? await adapter.retryRefused(account, retryOf.id, maxFeeWei, q)
+          : await adapter.sponsor(account, proposal.id, maxFeeWei, q);
         saveRecovery({ sponsorshipId: sp.id, branchId: branch.id, proposalId: proposal.id, account: account.address, txHash: sp.txHash, nonce: sp.nonce, savedAt: new Date().toISOString(), chainId: account.chainId, adapterKind: adapter.kind });
         onDone();
       }
@@ -72,8 +78,9 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
 
   const inputs = proposal.inputs.map((i) => latest.assets.find((a) => a.assetKey === i.assetKey && a.revision === i.revision));
   return (
-    <div className="confirm" aria-label="资助预览" aria-busy={busy !== null}>
-      <h3>资助预览</h3>
+    <div className="confirm" aria-label={retryOf ? "重试资助预览" : "资助预览"} aria-busy={busy !== null}>
+      <h3>{retryOf ? "重试资助预览" : "资助预览"}</h3>
+      {retryOf && <p className="hint">第 {retryOf.attempt} 次尝试被已认证的回调状态 1 拒绝。本次是第 {retryOf.attempt + 1} 次尝试：使用相同请求体、快照与提案，需要重新授权并再次支付；不会替换父作业、要求或文件。</p>}
       {busy === "quote" && <p className="state-line">正在读取当前价格与检查点…</p>}
       <dl className="facts">
         <div><dt>提案</dt><dd><CopyId value={proposal.id} label="提案编号" /></dd></div>
@@ -103,7 +110,7 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
           {busy === "approve" ? "等待授权签名…" : step === "approved" ? "1. 已授权" : "1. 授权精确额度"}
         </button>
         <button className="btn btn-primary" disabled={!quote || !!feeErr || busy !== null || step !== "approved"} onClick={() => act("purchase")}>
-          {busy === "purchase" ? "等待购买签名…" : "2. 购买执行"}
+          {busy === "purchase" ? "等待购买签名…" : retryOf ? "2. 购买重试" : "2. 购买执行"}
         </button>
       </div>
     </div>

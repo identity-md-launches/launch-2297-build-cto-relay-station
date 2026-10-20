@@ -50,6 +50,19 @@ export function ProposeForm({ adapter, account, branch, latest, caps, prefill, o
   const updatable = latest.assets.filter((a) => a.kind === kind);
   const wrongNet = account.chainId !== FIXTURE_CHAIN_ID;
   const edit = <T,>(f: (v: T) => void) => (v: T) => { f(v); setReview(false); setMsg(null); };
+  /** A type change never carries incompatible choices: single images are create-only with no inputs. */
+  const changeKind = (next: AssetKind) => {
+    setKind(next);
+    const target = latest.assets.find((x) => x.assetKey === targetKey);
+    if (next === "image") {
+      if (mode === "update") setTargetKey("");
+      setMode("create");
+      setInputs([]);
+    } else if (mode === "update" && target && target.kind !== next) {
+      setTargetKey("");
+      setInputs(inputs.filter((k) => k !== targetKey));
+    }
+  };
 
   const submit = async () => {
     if (lock.current) return;
@@ -76,7 +89,7 @@ export function ProposeForm({ adapter, account, branch, latest, caps, prefill, o
       <div className="field-row">
         <label className="field">
           <span>类型</span>
-          <select value={kind} onChange={(e) => edit(setKind)(e.target.value as AssetKind)}>
+          <select value={kind} onChange={(e) => edit(changeKind)(e.target.value as AssetKind)}>
             {caps.enabledKinds.map((k) => <option key={k} value={k}>{KIND_LABEL[k]}</option>)}
           </select>
         </label>

@@ -4,6 +4,7 @@ import { imageDimensions, safeFileName, verifyFile, type VerifyResult } from "..
 import type { AssetVersion, Capabilities } from "../domain/types";
 import { isolatedSrcDoc, renderMarkdown } from "./sanitize";
 import { CopyId, KIND_LABEL } from "../ui/format";
+import { recordVerification } from "../ui/verification";
 
 type Load =
   | { phase: "loading" }
@@ -37,9 +38,16 @@ function VerifiedPreview({ asset, adapter, caps }: { asset: AssetVersion; adapte
           result.checks.push({ name: "图片解码", ok: decoded, detail: decoded ? "浏览器成功解码" : "图片损坏，无法解码" });
           result.ok = decoded;
         }
-        if (live) setLoad({ phase: "done", bytes, result });
+        if (live) {
+          recordVerification(asset, result.ok ? "verified" : "failed");
+          setLoad({ phase: "done", bytes, result });
+        }
       })
-      .catch((e: Error) => live && setLoad({ phase: "error", message: e.message }));
+      .catch((e: Error) => {
+        if (!live) return;
+        recordVerification(asset, "failed");
+        setLoad({ phase: "error", message: e.message });
+      });
     return () => { live = false; };
   }, [adapter, asset, caps, d]);
 

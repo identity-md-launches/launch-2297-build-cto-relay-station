@@ -18,7 +18,7 @@ describe("live adapter (A1 not delivered)", () => {
       () => a.getHistory("x"), () => a.getProposals("x"), () => a.getSponsorships("x"), () => a.quoteFee("x"),
       () => a.createBranch(DEMO_ACCOUNTS[0], { title: "x", goal: "x" }),
       () => a.propose(DEMO_ACCOUNTS[0], {} as never), () => a.approve(DEMO_ACCOUNTS[0], {} as never, 1n),
-      () => a.sponsor(DEMO_ACCOUNTS[0], "x", 1n, {} as never), () => a.retryRefused(DEMO_ACCOUNTS[0], "x", 1n),
+      () => a.sponsor(DEMO_ACCOUNTS[0], "x", 1n, {} as never), () => a.retryRefused(DEMO_ACCOUNTS[0], "x", 1n, {} as never),
       () => a.resubmitBinding(DEMO_ACCOUNTS[0], "x"), () => a.fork(DEMO_ACCOUNTS[0], {} as never),
       () => a.reconcile({} as never), () => a.fetchFile({} as never, "j"),
     ]) await expect(call()).rejects.toThrow("A1_INTEGRATION_PENDING");

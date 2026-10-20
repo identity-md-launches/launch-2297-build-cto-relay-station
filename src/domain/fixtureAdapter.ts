@@ -395,7 +395,7 @@ export class FixtureAdapter implements RelayAdapter {
     sp.stages.git = "pending";
     sp.stages.publication = p.publish ? "pending" : "not_applicable";
     sp.checkpointId = cpId;
-    sp.note = "已绑定新检查点；文件校验请在资产区逐个执行";
+    sp.note = "已绑定新检查点；在资产区下载并校验本轮输出后，文件校验阶段才会更新";
   }
 
   private async produce(p: Proposal, prev: Checkpoint): Promise<{ bytes: Uint8Array; sha: Hex }> {
@@ -414,22 +414,34 @@ export class FixtureAdapter implements RelayAdapter {
     return { bytes, sha: await sha256Hex(bytes) };
   }
 
-  async retryRefused(account: Account, sponsorshipId: string, maxFee: bigint) {
+  async retryRefused(account: Account, sponsorshipId: string, maxFee: bigint, quote: FeeQuote) {
     const sp = this.s.sponsorships.find((x) => x.id === sponsorshipId);
     if (!sp || sp.stages.callback !== "refused" || sp.retriedBy) throw new Error("只有未重试的经认证状态 1 拒绝才允许重试");
     const p = this.s.proposals.find((x) => x.id === sp.proposalId)!;
     const b = this.branch(sp.branchId);
     if (b.frozen) throw new Error("分支已冻结");
     this.assertIdle(b.id, sp.id);
-    if (p.anchor !== b.latestCheckpoint) throw new StaleProposalError();
+    if (p.anchor !== b.latestCheckpoint || quote.anchor !== b.latestCheckpoint) throw new StaleProposalError();
+    if (quote.spender !== b.address || quote.parentJobId !== b.head) throw new Error("报价不属于当前分支");
     if (maxFee < PRICE) throw new Error("最高费用低于当前价格");
+    // The retry is a new funded purchase: it needs this account's own exact allowance to the Branch.
+    const allowanceKey = `${account.address}:${b.address}`;
+    if (BigInt(this.s.allowances[allowanceKey] ?? "0") < PRICE) throw new Error("授权额度不足，请先授权");
     this.purchases.add(b.id);
     try {
     const { hash, nonce } = await this.sign(account);
-    const retry: State["sponsorships"][number] = { ...structuredClone(sp), id: this.id("fx-sp"), sponsor: account.address, maxFee: maxFee.toString(), txHash: hash, nonce, attempt: sp.attempt + 1, stages: freshStages(), note: null, updatedAt: now() };
+    if (sp.retriedBy) throw new Error("该拒绝已经重试过");
+    this.s.allowances[allowanceKey] = "0"; // exact transfer, leftover cleared
+    const retry: State["sponsorships"][number] = { ...structuredClone(sp), id: this.id("fx-sp"), sponsor: account.address, maxFee: maxFee.toString(), txHash: hash, nonce, attempt: sp.attempt + 1, stages: freshStages(), note: null, checkpointId: null, updatedAt: now() };
     retry.stages.approval = "confirmed";
     sp.retriedBy = retry.id;
-    await this.advance(retry, p);
+    if (this.controls.txOutcome === "unknown") {
+      retry.stages.purchase = "unknown";
+      retry.note = "重试交易提交后未收到回执，重新加载后按该重试自己的哈希与 nonce 对账";
+      retry.unknownResolves = true;
+    } else {
+      await this.advance(retry, p);
+    }
     this.s.sponsorships.push(retry);
     this.save();
     return this.toSponsorship(retry);

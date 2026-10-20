@@ -8,6 +8,7 @@ import type { Account } from "./domain/types";
 import { CopyId, short } from "./ui/format";
 import { ProjectList } from "./ui/ProjectList";
 import { Workspace } from "./ui/Workspace";
+import { clearVerifications } from "./ui/verification";
 import { WALLET_CHAIN } from "./config";
 
 function useHash() {
@@ -133,6 +134,7 @@ function DemoApp({ branchId }: { branchId: string | null }) {
               try {
                 const next = await FixtureAdapter.create({ reset: true });
                 try { localStorage.removeItem("w1.recovery.v1"); } catch { /* local hints are optional */ }
+                clearVerifications();
                 qc.removeQueries({ predicate: (q) => ["branches", "branch", "history", "proposals", "sponsorships", "caps"].includes(String(q.queryKey[0])) });
                 setAdapter(next);
                 setGeneration((n) => n + 1);

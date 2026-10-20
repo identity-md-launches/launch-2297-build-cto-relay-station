@@ -145,7 +145,11 @@ test("missing callback stays pending; refused retry; bad binding resubmits witho
   await sponsor("新建文档 · faq");
   await expect(page.locator("#progress > ul > li").first().locator(".stage", { hasText: "回调" })).toContainText("已拒绝（状态 1）");
   await page.getByLabel("回调结果").selectOption("bad_binding");
-  await page.locator("#progress > ul > li").first().getByRole("button", { name: "用相同请求体重试（需再次支付）" }).click();
+  const refused = page.locator("#progress > ul > li").first();
+  await refused.getByRole("button", { name: "用相同请求体重试（需再次支付）" }).click();
+  await expect(refused.getByRole("heading", { name: "重试资助预览" })).toBeVisible();
+  await refused.getByRole("button", { name: "1. 授权精确额度" }).click();
+  await refused.getByRole("button", { name: "2. 购买重试" }).click();
   const retry = page.locator("#progress > ul > li").first();
   await expect(retry).toContainText("第 2 次尝试");
   await expect(retry.locator(".stage", { hasText: "绑定" })).toContainText("失败");

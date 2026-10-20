@@ -190,7 +190,9 @@ input[type="checkbox"], input[type="radio"] { width: 20px; height: 20px; min-hei
 .md h1 { font-size: var(--text-lg); }
 .md h2 { font-size: var(--text-md); }
 .md pre { white-space: pre-wrap; overflow-wrap: anywhere; }
-.md table { width: 100%; table-layout: fixed; }
+.md .table-scroll { max-width: 100%; overflow-x: auto; overscroll-behavior-x: contain; border-radius: var(--radius-sm); }
+.md table { border-collapse: collapse; }
+.md th, .md td { min-width: 4em; padding: var(--space-1) var(--space-2); border: 1px solid var(--color-border); overflow-wrap: break-word; text-align: start; vertical-align: top; }
 .img-box { margin: 0; display: grid; gap: var(--space-1); justify-items: start; }
 .img-box img { width: 128px; height: 128px; image-rendering: pixelated; border-radius: var(--radius-sm); outline: 1px solid rgb(0 0 0 / 0.1); outline-offset: -1px; }
 .img-box figcaption { font-size: var(--text-sm); color: var(--color-text-2); }

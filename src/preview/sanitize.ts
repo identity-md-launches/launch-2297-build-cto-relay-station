@@ -14,11 +14,25 @@ export function renderMarkdown(src: string): string {
       node.setAttribute("target", "_blank");
     }
   });
-  return purify.sanitize(raw, {
+  const clean = purify.sanitize(raw, {
     FORBID_TAGS: ["img", "iframe", "frame", "object", "embed", "form", "input", "button", "style", "svg", "math", "video", "audio", "source", "link", "meta", "base"],
     FORBID_ATTR: ["style", "srcset", "id", "name", "autofocus", "tabindex"],
     ALLOW_DATA_ATTR: false,
   });
+  // Wide tables keep readable columns inside their own keyboard-scrollable region; the page never overflows.
+  // The wrapper is added by W1 after sanitizing, inside an inert template, so file content cannot supply it.
+  const t = document.createElement("template");
+  t.innerHTML = clean;
+  for (const table of Array.from(t.content.querySelectorAll("table"))) {
+    const box = document.createElement("div");
+    box.className = "table-scroll";
+    box.setAttribute("role", "region");
+    box.setAttribute("tabindex", "0");
+    box.setAttribute("aria-label", "文档表格（可横向滚动）");
+    table.replaceWith(box);
+    box.append(table);
+  }
+  return t.innerHTML;
 }
 
 /**

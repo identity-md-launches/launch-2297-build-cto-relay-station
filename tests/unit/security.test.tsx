@@ -168,18 +168,47 @@ describe("fixture purchase exclusion (not A1 integration)", () => {
     await a.approve(DEMO_ACCOUNTS[0], q, q.price);
     const sp = await a.sponsor(DEMO_ACCOUNTS[0], "fx-prop-1", q.price, q);
     const before = await a.getProposals("fx-branch-1");
-    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, 0n)).rejects.toThrow("最高费用");
+    const rq = await a.quoteFee("fx-prop-1");
+    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, 0n, rq)).rejects.toThrow("最高费用");
+    // B has no allowance of its own: the retry cannot fabricate an approval.
+    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, rq.price, rq)).rejects.toThrow("授权额度不足");
+    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, rq.price, { ...rq, spender: DEMO_ACCOUNTS[0].address })).rejects.toThrow("报价不属于");
+    await a.approve(DEMO_ACCOUNTS[1], rq, rq.price);
     a.controls.callbackOutcome = "bad_binding";
-    const retry = await a.retryRefused(DEMO_ACCOUNTS[1], sp.id, q.price);
+    const retry = await a.retryRefused(DEMO_ACCOUNTS[1], sp.id, rq.price, rq);
     expect(retry.proposalId).toBe(sp.proposalId);
     expect(retry.attempt).toBe(2);
+    expect(retry.sponsor).toBe(DEMO_ACCOUNTS[1].address);
+    expect(retry.txHash).not.toBe(sp.txHash);
     expect((await a.getBranch("fx-branch-1")).latestCheckpoint).toBe("fx-branch-1:3");
-    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, q.price)).rejects.toThrow("未重试");
+    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, rq.price, rq)).rejects.toThrow("未重试");
     expect(await a.getProposals("fx-branch-1")).toEqual(before);
     await a.resubmitBinding(DEMO_ACCOUNTS[1], retry.id);
     expect(await a.getSponsorships("fx-branch-1")).toHaveLength(2);
     expect((await a.getBranch("fx-branch-1")).latestCheckpoint).toBe("fx-branch-1:4");
     await expect(a.resubmitBinding(DEMO_ACCOUNTS[1], retry.id)).rejects.toThrow("失败的绑定");
+  });
+
+  it("an unknown retry receipt stays unknown and reconciles by the retry's own hash and nonce", async () => {
+    const a = await FixtureAdapter.create({ reset: true, latency: 0 });
+    a.controls.callbackOutcome = "refused";
+    const q = await a.quoteFee("fx-prop-1");
+    await a.approve(DEMO_ACCOUNTS[0], q, q.price);
+    const sp = await a.sponsor(DEMO_ACCOUNTS[0], "fx-prop-1", q.price, q);
+    const rq = await a.quoteFee("fx-prop-1");
+    await a.approve(DEMO_ACCOUNTS[1], rq, rq.price);
+    a.controls.callbackOutcome = "missing";
+    a.controls.txOutcome = "unknown";
+    const retry = await a.retryRefused(DEMO_ACCOUNTS[1], sp.id, rq.price, rq);
+    expect(retry.stages.approval).toBe("confirmed");
+    expect(retry.stages.purchase).toBe("unknown");
+    expect(retry.stages.callback).toBe("not_started");
+    const rec = { sponsorshipId: retry.id, branchId: "fx-branch-1", proposalId: "fx-prop-1", account: DEMO_ACCOUNTS[1].address, chainId: 31337, adapterKind: "fixture" as const, savedAt: "x" };
+    expect(await a.reconcile({ ...rec, txHash: sp.txHash, nonce: sp.nonce })).toBeNull();
+    const done = await a.reconcile({ ...rec, txHash: retry.txHash, nonce: retry.nonce });
+    expect(done?.stages.purchase).toBe("confirmed");
+    expect(done?.stages.callback).toBe("pending");
+    expect(await a.getSponsorships("fx-branch-1")).toHaveLength(2);
   });
 
   it("rejects signatures and freezes status 2 without an HTTP/time unlock", async () => {
@@ -191,7 +220,7 @@ describe("fixture purchase exclusion (not A1 integration)", () => {
     await a.approve(DEMO_ACCOUNTS[0], q, q.price);
     a.controls.callbackOutcome = "failed";
     const sp = await a.sponsor(DEMO_ACCOUNTS[0], "fx-prop-1", q.price, q);
-    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, q.price)).rejects.toThrow("状态 1");
+    await expect(a.retryRefused(DEMO_ACCOUNTS[1], sp.id, q.price, q)).rejects.toThrow("状态 1");
     await expect(a.sponsor(DEMO_ACCOUNTS[1], "fx-prop-2", q.price, q)).rejects.toThrow("冻结");
     expect((await a.getBranch("fx-branch-1")).frozen).toBe(true);
   });

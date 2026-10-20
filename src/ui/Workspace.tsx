@@ -8,6 +8,7 @@ import { CopyId, KIND_LABEL, STAGE_LABEL, STATE_LABEL, formatTime, short } from 
 import { ProposeForm } from "./ProposeForm";
 import { SponsorPanel } from "./SponsorPanel";
 import { loadRecovery, removeRecovery } from "./recovery";
+import { useVerificationVersion, verificationOf } from "./verification";
 
 interface Props { adapter: RelayAdapter; branchId: string; account: Account }
 
@@ -156,7 +157,8 @@ export function Workspace({ adapter, branchId, account }: Props) {
           {sponsorships.data && sponsorships.data.length === 0 && <p className="empty">这个分支还没有资助。资助一个当前提案后，各阶段会分别显示在这里。</p>}
           <ul className="list">
             {sponsorships.data?.slice().reverse().map((sp) => (
-              <SponsorshipRow key={`${who}:${sp.id}`} sp={sp} canRetry={isLatestAttempt(sp)} adapter={adapter} account={account} fixture={fixture} wrongNet={wrongNet} onChange={refresh} />
+              <SponsorshipRow key={`${who}:${sp.id}`} sp={sp} canRetry={isLatestAttempt(sp)} adapter={adapter} account={account} fixture={fixture} wrongNet={wrongNet} onChange={refresh}
+                branch={b} latest={latest} cps={cps} chainId={caps.data.chainId} proposal={proposals.data?.find((p) => p.id === sp.proposalId) ?? null} />
             ))}
           </ul>
         </section>
@@ -294,7 +296,23 @@ function DemoOutcome({ fixture }: { fixture: FixtureAdapter }) {
   );
 }
 
-function SponsorshipRow({ sp, canRetry, adapter, account, fixture, wrongNet, onChange }: { sp: Sponsorship; canRetry: boolean; adapter: RelayAdapter; account: Account; fixture: FixtureAdapter | null; wrongNet: boolean; onChange: () => void }) {
+/** The file stage after binding: a local observation of this checkpoint's actual output bytes, never chain truth. */
+function fileStage(sp: Sponsorship, cps: Checkpoint[]): { state: Sponsorship["stages"]["files"]; text: string; note: string | null } {
+  const base = { state: sp.stages.files, text: STATE_LABEL[sp.stages.files], note: null };
+  if (sp.stages.files !== "pending" || !sp.checkpointId) return base;
+  const cp = cps.find((c) => c.id === sp.checkpointId);
+  const outputs = cp?.assets.filter((a) => cp.changed.includes(a.assetKey) && a.originCheckpoint === cp.id) ?? [];
+  if (!outputs.length) return base;
+  const seen = outputs.map(verificationOf);
+  if (seen.includes("failed")) return { state: "failed", text: "本机校验失败", note: "本轮输出的实际文件与 A1 描述不一致或不可用；绑定记录不变，文件不获得已校验标记。" };
+  if (seen.every((r) => r === "verified")) return { state: "confirmed", text: "本机已校验", note: `本轮输出 ${outputs.map((a) => a.assetKey).join("、")} 的实际字节已在本页面校验（SHA-256、长度、类型）；这是本机观察，不代表链上验证，重新加载后需要再次校验。` };
+  return base;
+}
+
+function SponsorshipRow({ sp, canRetry, adapter, account, fixture, wrongNet, onChange, branch, latest, cps, chainId, proposal }: { sp: Sponsorship; canRetry: boolean; adapter: RelayAdapter; account: Account; fixture: FixtureAdapter | null; wrongNet: boolean; onChange: () => void; branch: Branch; latest: Checkpoint; cps: Checkpoint[]; chainId: number; proposal: Proposal | null }) {
+  useVerificationVersion();
+  const files = fileStage(sp, cps);
+  const [retrying, setRetrying] = useState(false);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
   const lock = useRef(false);
@@ -309,17 +327,22 @@ function SponsorshipRow({ sp, canRetry, adapter, account, fixture, wrongNet, onC
     <li className="row row-col" data-testid={`sp-${sp.id}`}>
       <div className="row-main">
         <p className="row-title">提案 {sp.proposalId} · 第 {sp.attempt} 次尝试</p>
-        <p className="meta">资助者 {short(sp.sponsor)} · 交易 {sp.txHash ? short(sp.txHash) : "无"} · nonce {sp.nonce ?? "无"}</p>
+        <dl className="facts">
+          <div><dt>资助者</dt><dd><CopyId value={sp.sponsor} label="资助者地址" /></dd></div>
+          <div><dt>购买交易</dt><dd>{sp.txHash ? <CopyId value={sp.txHash} label="交易哈希" /> : "无"} · nonce {sp.nonce ?? "无"} · 链 {chainId}</dd></div>
+        </dl>
         <ol className="stages">
-          {STAGES.map((s) => (
-            <li key={s} className={`stage st-${sp.stages[s]}`}><span>{STAGE_LABEL[s]}</span><span>{STATE_LABEL[sp.stages[s]]}</span></li>
-          ))}
+          {STAGES.map((s) => s === "files"
+            ? <li key={s} className={`stage st-${files.state}`}><span>{STAGE_LABEL[s]}</span><span>{files.text}</span></li>
+            : <li key={s} className={`stage st-${sp.stages[s]}`}><span>{STAGE_LABEL[s]}</span><span>{STATE_LABEL[sp.stages[s]]}</span></li>
+          )}
         </ol>
         {sp.note && <p className="hint">{sp.note}</p>}
+        {files.note && <p className="hint">{files.note}</p>}
       </div>
       <div className="actions">
         {sp.stages.callback === "refused" && canRetry && (
-          <button className="btn btn-primary" disabled={busy || wrongNet} onClick={() => run(() => adapter.retryRefused(account, sp.id, sp.maxFee))}>用相同请求体重试（需再次支付）</button>
+          <button className="btn btn-primary" disabled={busy || wrongNet || !proposal} aria-expanded={retrying} onClick={() => setRetrying(!retrying)}>{retrying ? "收起重试" : "用相同请求体重试（需再次支付）"}</button>
         )}
         {sp.stages.binding === "failed" && (
           <button className="btn btn-primary" disabled={busy || wrongNet} onClick={() => run(() => adapter.resubmitBinding(account, sp.id))}>提交修正后的绑定清单（不重新购买）</button>
@@ -328,6 +351,10 @@ function SponsorshipRow({ sp, canRetry, adapter, account, fixture, wrongNet, onC
           <button className="btn btn-link demo-only" disabled={busy} onClick={() => run(() => fixture.deliverCallback(sp.id))}>演示：回调到达</button>
         )}
       </div>
+      {retrying && proposal && sp.stages.callback === "refused" && canRetry && !wrongNet && (
+        <SponsorPanel adapter={adapter} account={account} branch={branch} proposal={proposal} latest={latest} retryOf={sp}
+          onDone={() => { setRetrying(false); onChange(); document.getElementById("progress")?.focus(); }} />
+      )}
       {err && <p className="alert alert-error" role="alert">{err}</p>}
     </li>
   );
