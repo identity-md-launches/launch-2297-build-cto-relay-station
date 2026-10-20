@@ -1,0 +1,9 @@
+node_modules/
+**/node_modules/
+.npm/
+.cache/
+test-results/
+playwright-report/
+test/scratch/
+*.tgz
+.vite/
