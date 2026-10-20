@@ -1,11 +1,10 @@
 {
+  "command": "node scripts/record-release.mjs",
+  "exitCode": 0,
   "integration": "A1_INTEGRATION_PENDING",
-  "unitPassed": 27,
-  "browserPassed": 90,
+  "unitPassed": 28,
+  "browserPassed": 120,
   "tastePassed": 16,
-  "bundle": {
-    "fileCount": 252,
-    "bytes": 6544109,
-    "limit": 8388608
-  }
+  "sourceExportPinsVerified": 60,
+  "finalBundle": "See docs/validation/release.json; manifest generation includes this log."
 }

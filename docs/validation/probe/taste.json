@@ -4,7 +4,7 @@
    "name": "render",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 8672,
+   "durationMs": 8287,
    "output": "renders, no script errors or missing local files"
   },
   {
@@ -25,7 +25,7 @@
    "name": "contrast",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 0,
+   "durationMs": 1,
    "output": "all measured text meets 4.5:1 (3:1 large)"
   },
   {
@@ -54,7 +54,7 @@
    "passed": true,
    "exitCode": 0,
    "durationMs": 0,
-   "output": "390: 2 sizes in use, 5 with one-offs (13px×8, 15px×16, 17px×1, 20px×1, 26px×1)\n1440: 2 sizes in use, 5 with one-offs (13px×8, 15px×16, 17px×1, 20px×1, 26px×1)\nbar: 6 sizes used more than once, 8 counting one-offs, per width"
+   "output": "390: 2 sizes in use, 5 with one-offs (13px×8, 15px×17, 17px×1, 20px×1, 26px×1)\n1440: 2 sizes in use, 5 with one-offs (13px×8, 15px×17, 17px×1, 20px×1, 26px×1)\nbar: 6 sizes used more than once, 8 counting one-offs, per width"
   },
   {
    "name": "type-faces",
@@ -67,7 +67,7 @@
    "name": "glyphs",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "no em dashes or emoji in text"
   },
   {
@@ -81,7 +81,7 @@
    "name": "repetition",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 2,
    "output": "no repeated lines"
   },
   {
@@ -89,7 +89,7 @@
    "passed": true,
    "exitCode": 0,
    "durationMs": 0,
-   "output": "prose on the first screen: 15 words at 390 (bar 60), 15 at 1440 (bar 90)\nall words on the first screen: 68 at 390, 73 at 1440\nwhole page: 73 words, 15 of them prose"
+   "output": "prose on the first screen: 14 words at 390 (bar 60), 14 at 1440 (bar 90)\nall words on the first screen: 64 at 390, 66 at 1440\nwhole page: 66 words, 14 of them prose"
   },
   {
    "name": "chrome",
@@ -109,12 +109,12 @@
    "name": "share",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "title \"CTO 中继站 · 公开项目工作区\", favicon, og:title, og:image, description"
   }
  ],
  "target": "dist",
- "at": "2026-10-20T14:44:20.640Z",
+ "at": "2026-10-20T15:48:44.467Z",
  "bar": {
   "sizes": 6,
   "strays": 8,
@@ -136,8 +136,8 @@
    "vh": 844,
    "art": 0,
    "scrollWidth": 390,
-   "height": 988,
-   "texts": 27,
+   "height": 965,
+   "texts": 28,
    "offenders": [],
    "overlaps": [],
    "floating": [],
@@ -181,7 +181,7 @@
      "w": 38,
      "h": 32,
      "cx": 332.765625,
-     "cy": 788.390625,
+     "cy": 765.140625,
      "label": "复制"
     },
     {
@@ -189,7 +189,7 @@
      "w": 38,
      "h": 32,
      "cx": 47,
-     "cy": 944.3125,
+     "cy": 921.0625,
      "label": "复制"
     }
    ],
@@ -214,7 +214,7 @@
    "art": 0,
    "scrollWidth": 1440,
    "height": 900,
-   "texts": 27,
+   "texts": 28,
    "offenders": [],
    "overlaps": [],
    "floating": [],
@@ -445,8 +445,8 @@
   },
   {
    "sel": "#live-why",
-   "text": "创建、提案、资助与分叉要等 A1 交付 SDK 与已验证的配置后才能使用。演示模式只用本地样例，不会发送真实交易。",
-   "words": 9,
+   "text": "创建、提案、资助与分叉需完成 A1 浏览器集成并验证部署配置。演示模式只用本地样例，不会发送真实交易。",
+   "words": 7,
    "tag": "p",
    "size": 13,
    "weight": 400,
@@ -467,7 +467,7 @@
    "fixed": false,
    "chrome": false,
    "data": false,
-   "digits": 0.017543859649122806
+   "digits": 0.0196078431372549
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(1)",
@@ -549,8 +549,8 @@
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(2)",
-   "text": "A1 尚未交付可用的 SDK、ABI 与部署配置，公开数据与链上操作均不可用。",
-   "words": 6,
+   "text": "A1 已交付源码与 Node SDK，尚无已验证的产品部署；浏览器集成未完成，公开数据与链上操作仍不可用。",
+   "words": 7,
    "tag": "p",
    "size": 15,
    "weight": 400,
@@ -567,16 +567,16 @@
    "x": 24,
    "y": 338.21875,
    "w": 342,
-   "h": 46.5,
+   "h": 69.75,
    "fixed": false,
    "chrome": false,
    "data": false,
-   "digits": 0.02564102564102564
+   "digits": 0.018867924528301886
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(1)",
-   "text": "缺少： A1 交付仓库与提交（含 SDK/CLI 与 ABI）",
-   "words": 8,
+   "text": "缺少： 已验证的链 ID、Factory 地址与公开 RPC",
+   "words": 6,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -591,18 +591,18 @@
    "heading": false,
    "pill": false,
    "x": 48,
-   "y": 388.71875,
+   "y": 411.96875,
    "w": 318,
-   "h": 46.5,
+   "h": 23.25,
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.03225806451612903
+   "digits": 0
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(2)",
-   "text": "缺少： 已验证的链 ID、Factory 地址与公开 RPC",
-   "words": 6,
+   "text": "缺少： 浏览器 SDK 适配与不可变配置核验",
+   "words": 4,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -627,8 +627,8 @@
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(3)",
-   "text": "缺少： A1 不可变能力配置（类型、容量、大小上限、发布开关）",
-   "words": 7,
+   "text": "缺少： W1 接入真实 A1 的本地链验收",
+   "words": 5,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -645,11 +645,11 @@
    "x": 48,
    "y": 458.46875,
    "w": 318,
-   "h": 46.5,
+   "h": 23.25,
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.03225806451612903
+   "digits": 0.09523809523809523
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(3)",
@@ -669,7 +669,7 @@
    "heading": false,
    "pill": false,
    "x": 24,
-   "y": 508.96875,
+   "y": 485.71875,
    "w": 342,
    "h": 23.25,
    "fixed": false,
@@ -695,7 +695,7 @@
    "heading": true,
    "pill": false,
    "x": 28,
-   "y": 584.21875,
+   "y": 560.96875,
    "w": 334,
    "h": 24,
    "fixed": false,
@@ -721,7 +721,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 620.21875,
+   "y": 596.96875,
    "w": 334,
    "h": 22.140625,
    "fixed": false,
@@ -747,7 +747,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 642.359375,
+   "y": 619.109375,
    "w": 334,
    "h": 23.25,
    "fixed": false,
@@ -773,7 +773,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 673.609375,
+   "y": 650.359375,
    "w": 334,
    "h": 22.140625,
    "fixed": false,
@@ -799,7 +799,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 695.75,
+   "y": 672.5,
    "w": 334,
    "h": 23.25,
    "fixed": false,
@@ -825,7 +825,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 727,
+   "y": 703.75,
    "w": 334,
    "h": 22.140625,
    "fixed": false,
@@ -835,8 +835,8 @@
   },
   {
    "sel": "section.panel:nth-of-type(2) > dl.facts > div:nth-of-type(3) > dd",
-   "text": "作业 ， 2026-10-20 查看时状态为 executing ，尚无公开交付",
-   "words": 5,
+   "text": "作业 ， 2026-10-20 查看时状态为 completed ，",
+   "words": 4,
    "tag": "dd",
    "size": 15,
    "weight": 400,
@@ -851,13 +851,13 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 749.140625,
+   "y": 725.890625,
    "w": 334,
    "h": 101.75,
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.2
+   "digits": 0.23529411764705882
   },
   {
    "sel": "div:nth-of-type(3) > dd > span.copy-id > code.mono.id-text",
@@ -877,7 +877,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 778.3125,
+   "y": 755.0625,
    "w": 281.765625,
    "h": 20.140625,
    "fixed": false,
@@ -903,9 +903,35 @@
    "heading": false,
    "pill": false,
    "x": 313.765625,
-   "y": 772.390625,
+   "y": 749.140625,
    "w": 38,
    "h": 32,
+   "fixed": false,
+   "chrome": false,
+   "data": true,
+   "digits": 0
+  },
+  {
+   "sel": "dl.facts > div:nth-of-type(3) > dd > a",
+   "text": "查看已固定提交的源码交付",
+   "words": 1,
+   "tag": "a",
+   "size": 15,
+   "weight": 400,
+   "family": "pingfang sc",
+   "mono": false,
+   "upper": false,
+   "authoredCaps": false,
+   "tracking": 0,
+   "ratio": 7.48,
+   "large": false,
+   "inCode": false,
+   "heading": false,
+   "pill": false,
+   "x": 28,
+   "y": 782.140625,
+   "w": 326.09375,
+   "h": 43.25,
    "fixed": false,
    "chrome": false,
    "data": true,
@@ -929,7 +955,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 858.890625,
+   "y": 835.640625,
    "w": 334,
    "h": 22.140625,
    "fixed": false,
@@ -955,7 +981,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 884.03125,
+   "y": 860.78125,
    "w": 334,
    "h": 40.28125,
    "fixed": false,
@@ -981,7 +1007,7 @@
    "heading": false,
    "pill": false,
    "x": 28,
-   "y": 928.3125,
+   "y": 905.0625,
    "w": 38,
    "h": 32,
    "fixed": false,
@@ -1149,8 +1175,8 @@
   },
   {
    "sel": "#live-why",
-   "text": "创建、提案、资助与分叉要等 A1 交付 SDK 与已验证的配置后才能使用。演示模式只用本地样例，不会发送真实交易。",
-   "words": 9,
+   "text": "创建、提案、资助与分叉需完成 A1 浏览器集成并验证部署配置。演示模式只用本地样例，不会发送真实交易。",
+   "words": 7,
    "tag": "p",
    "size": 13,
    "weight": 400,
@@ -1171,7 +1197,7 @@
    "fixed": false,
    "chrome": false,
    "data": false,
-   "digits": 0.017543859649122806
+   "digits": 0.0196078431372549
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(1)",
@@ -1253,8 +1279,8 @@
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(2)",
-   "text": "A1 尚未交付可用的 SDK、ABI 与部署配置，公开数据与链上操作均不可用。",
-   "words": 6,
+   "text": "A1 已交付源码与 Node SDK，尚无已验证的产品部署；浏览器集成未完成，公开数据与链上操作仍不可用。",
+   "words": 7,
    "tag": "p",
    "size": 15,
    "weight": 400,
@@ -1275,12 +1301,12 @@
    "fixed": false,
    "chrome": false,
    "data": false,
-   "digits": 0.02564102564102564
+   "digits": 0.018867924528301886
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(1)",
-   "text": "缺少： A1 交付仓库与提交（含 SDK/CLI 与 ABI）",
-   "words": 8,
+   "text": "缺少： 已验证的链 ID、Factory 地址与公开 RPC",
+   "words": 6,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -1301,12 +1327,12 @@
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.03225806451612903
+   "digits": 0
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(2)",
-   "text": "缺少： 已验证的链 ID、Factory 地址与公开 RPC",
-   "words": 6,
+   "text": "缺少： 浏览器 SDK 适配与不可变配置核验",
+   "words": 4,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -1331,8 +1357,8 @@
   },
   {
    "sel": "section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > ul > li:nth-of-type(3)",
-   "text": "缺少： A1 不可变能力配置（类型、容量、大小上限、发布开关）",
-   "words": 7,
+   "text": "缺少： W1 接入真实 A1 的本地链验收",
+   "words": 5,
    "tag": "li",
    "size": 15,
    "weight": 400,
@@ -1353,7 +1379,7 @@
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.03225806451612903
+   "digits": 0.09523809523809523
   },
   {
    "sel": "#main > section.intro:nth-of-type(1) > div.alert.alert-pending:nth-of-type(2) > p:nth-of-type(3)",
@@ -1539,8 +1565,8 @@
   },
   {
    "sel": "section.panel:nth-of-type(2) > dl.facts > div:nth-of-type(3) > dd",
-   "text": "作业 ， 2026-10-20 查看时状态为 executing ，尚无公开交付",
-   "words": 5,
+   "text": "作业 ， 2026-10-20 查看时状态为 completed ，",
+   "words": 4,
    "tag": "dd",
    "size": 15,
    "weight": 400,
@@ -1561,7 +1587,7 @@
    "fixed": false,
    "chrome": false,
    "data": true,
-   "digits": 0.2
+   "digits": 0.23529411764705882
   },
   {
    "sel": "div:nth-of-type(3) > dd > span.copy-id > code.mono.id-text",
@@ -1610,6 +1636,32 @@
    "y": 573.578125,
    "w": 38,
    "h": 32,
+   "fixed": false,
+   "chrome": false,
+   "data": true,
+   "digits": 0
+  },
+  {
+   "sel": "dl.facts > div:nth-of-type(3) > dd > a",
+   "text": "查看已固定提交的源码交付",
+   "words": 1,
+   "tag": "a",
+   "size": 15,
+   "weight": 400,
+   "family": "pingfang sc",
+   "mono": false,
+   "upper": false,
+   "authoredCaps": false,
+   "tracking": 0,
+   "ratio": 7.48,
+   "large": false,
+   "inCode": false,
+   "heading": false,
+   "pill": false,
+   "x": 943.765625,
+   "y": 577.5,
+   "w": 180,
+   "h": 20,
    "fixed": false,
    "chrome": false,
    "data": true,

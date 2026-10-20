@@ -1,0 +1,69 @@
+{
+  "observedAt": "2026-10-20T15:43:22.220Z",
+  "submittedAssets": [
+    "./assets/index-BGwPVQjO.js",
+    "./assets/index-DCBZ4oQ3.css"
+  ],
+  "changedPins": [
+    {
+      "path": "src/App.tsx",
+      "pinned": "59c88b2f8456a56fa2abbfaaf3f19064365a0f3433a0cbe2803099b7621abb81",
+      "actual": "318f755e2cf0d79113396c37d4fb5951fbcb6a7a954737ad721da561b383360b"
+    },
+    {
+      "path": "src/domain/adapter.ts",
+      "pinned": "c94b1f8a069da42a342ade4c9b307069e7184139e90c165acf5969fa338cff52",
+      "actual": "7457ac691824713b911f1f2150f6fe3dd9cfaf5bf409be9ef5be0f9fe8c0a54c"
+    },
+    {
+      "path": "src/domain/fixtureAdapter.ts",
+      "pinned": "62e5d61c17af3393ad93fcc47275bc8bc78a2e03c2a5b2ee7f85694095b2f475",
+      "actual": "4f57ce717ee39d7ae472d7e0f9b000efa464e43ad5e9ef3dd3f6b0f0d8e3ba4a"
+    },
+    {
+      "path": "src/preview/FilePreview.tsx",
+      "pinned": "273d304a133dfc9c8ad553d0e12668f257effc1bd5e7ce094d26b089d7e1414e",
+      "actual": "5f292f5b7e6e4d7eaaabe2de5a99781fcd28bfd27b5ed50e6baea77bc0aa17be"
+    },
+    {
+      "path": "src/preview/sanitize.ts",
+      "pinned": "2f31bec51ce2c3d1ba4984083a353439fc99f5b676a3acc0983e9d82f6948d00",
+      "actual": "00d3565ab1f490b8b1b48d806ddec4faaa906ebc0227177df7c9021755c4e7fb"
+    },
+    {
+      "path": "src/styles.css",
+      "pinned": "ba4812c1d9990946a7b7dad431340e6943b4c338fa440d75092795e98be67d0d",
+      "actual": "9b8b8e191b2d64bea37c611d9be5e3946c146aa45dba80656d3175269d24329a"
+    },
+    {
+      "path": "src/ui/ProposeForm.tsx",
+      "pinned": "8acf51b1412f1a24353b9bca4b91480c39369f4d5c6e4d32c537586a8d8aa83f",
+      "actual": "c5b46e9615cbdd44ac5ec228cac9b440244189ad9ac9134914eb779af25ba5b8"
+    },
+    {
+      "path": "src/ui/SponsorPanel.tsx",
+      "pinned": "d68c73826a5d9e451f04f3d141154c92ed5d1f5741e36eb68bacf3cc0cb32899",
+      "actual": "4776d94408f9f0f8e6e028dbf114d4f2c256d619a1279771c4caea595c9c18de"
+    },
+    {
+      "path": "src/ui/Workspace.tsx",
+      "pinned": "c674b9d5b8762371a2a386c54a9c26a49023c37ad4d5be7ba68d0f438b7f6968",
+      "actual": "0c31733c137d2f9327d74bdd5e138cf88204406254bb6bdf69555a85901615b0"
+    },
+    {
+      "path": "tests/e2e/w1.spec.ts",
+      "pinned": "19eed23f1c18049bbc7b02b1b160cf4e0a59eaee0c2243474ae0d63578e16794",
+      "actual": "49f40bbaf41d6eb18ec5d91853355798f1157e2d40d75cd5eefef1bc0839bd78"
+    },
+    {
+      "path": "tests/unit/domain.test.ts",
+      "pinned": "978ead546cb04f5593a39b9042e2238b9377cdbf2e3239330d15629b658392f7",
+      "actual": "843e11496ab65a2a0e995e40846036b933076cc5202b9a5c16163d8fd6ccec11"
+    },
+    {
+      "path": "tests/unit/security.test.tsx",
+      "pinned": "fa7f567a3513c50b3a5a1d18680daa27509a72af194f1700184b07f638291c7c",
+      "actual": "3123dba4c9fd2ea5bc11159a440d7d36cf718075fc5bc321d5836b123acb761b"
+    }
+  ]
+}

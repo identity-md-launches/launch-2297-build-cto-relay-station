@@ -18,6 +18,8 @@ async function pin(path) {
 for (const path of ["src", "tests", "scripts", "public", "dist", "package.json", "package-lock.json", "index.html", "tsconfig.json", "vite.config.ts", "vitest.config.ts", "playwright.config.ts", "README.md", "DESIGN.md", "REVIEW.md", "docs/A1-HANDOFF.md", "docs/validation/README.md", "docs/licenses"]) await pin(path);
 entries.sort((a, b) => a.path.localeCompare(b.path));
 const json = async (path) => JSON.parse(await readFile(path, "utf8"));
+const tested = await json("docs/validation/raw/tested-tree.json");
+for (const row of tested.pins) assert.equal(sha(await readFile(row.path)), row.sha256, `Changed since final validation; rebuild/retest first: ${row.path}`);
 const commands = await json("docs/validation/raw/commands.json");
 assert.equal(commands.length, 4);
 assert.ok(commands.every((record) => record.exitCode === 0));
@@ -36,7 +38,11 @@ const design = await json("docs/validation/raw/design-measurements.json");
 assert.equal(design.status, "passed");
 const a1Path = "docs/validation/raw/a1-final.json";
 const a1 = await json(a1Path);
-assert.equal(a1.delivery, null, "A1 now has a delivery: integration status must be re-evaluated, not recorded as pending");
+const a1Source = await json("docs/validation/raw/a1-source-pins.json");
+assert.equal(a1.delivery.repoUrl, a1Source.repo);
+assert.equal(a1.delivery.commit, a1Source.commit);
+assert.equal(a1Source.release.productionDeployment, null);
+assert.equal(a1Source.release.productionReady, false);
 const protectedPaths = ["package.json", "package-lock.json", "foundry.toml", "foundry.lock", "remappings.txt", ".gitmodules", "lib/", "vite.config.ts", "tsconfig.json", "vitest.config.ts", ".github/"];
 const changedProtected = execFileSync("git", ["diff", "--name-only", "HEAD", "--", ...protectedPaths], { encoding: "utf8" }).trim();
 assert.equal(changedProtected, "", "Protected configuration/dependencies changed");
@@ -66,7 +72,10 @@ const release = {
     state: a1.state, delivery: a1.delivery, projectHead: a1.project?.head ?? null,
     submittedBodySha256FromAssignment: "3683b19c9c39d67b5c679641e4755e7914f471fe41329d1a3b2dfb1a34a58c77",
     submittedBodyPinVerification: "NOT_RUN: no exact submitted-body artifact supplied by public job metadata",
-    actualRepo: null, actualCommit: null, importedFiles: [], localChain: "NOT_RUN", mainnet: "NOT_RUN",
+    actualRepo: a1Source.repo, actualCommit: a1Source.commit, importedFiles: [],
+    inspectedFiles: { path: "docs/validation/raw/a1-source-pins.json", sha256: sha(await readFile("docs/validation/raw/a1-source-pins.json")) },
+    localChain: "NOT_RUN: W1 browser adapter is not bridged to A1", mainnet: "NOT_RUN",
+    dependencyReplay: { scope: "Unmodified A1 SDK/contract harness only; not W1 integration", report: "docs/validation/raw/a1-core-local-replay.json", sha256: sha(await readFile("docs/validation/raw/a1-core-local-replay.json")) },
     response: { path: a1Path, sha256: sha(await readFile(a1Path)) },
   },
   checks: {
@@ -75,6 +84,7 @@ const release = {
     taste: { passed: probe.checks.filter((check) => check.passed).length, total: probe.checks.length },
     designSample: { passed: true, ratios: design.measurements.map((row) => ({ name: row.name, ratio: row.ratio })) },
     protectedConfigurationUnchanged: true,
+    testedTree: { path: "docs/validation/raw/tested-tree.json", sha256: sha(await readFile("docs/validation/raw/tested-tree.json")) },
   },
   pins: entries,
   bundle: { fileCount: fileCount + 1, bytes: 0, limit: 8388608 },

@@ -1,0 +1,25 @@
+{
+  "scope": "Unmodified dependency replay; W1-to-A1 browser integration NOT_RUN",
+  "sourceCommit": "9b0294e7ab19060bd00c489fbe032cf248528e0d",
+  "commands": [
+    {
+      "cwd": "test/scratch/a1",
+      "command": "forge build --offline",
+      "exitCode": 0,
+      "stdoutAndStderr": "docs/validation/raw/a1-core-build.log"
+    },
+    {
+      "cwd": "test/scratch/a1",
+      "command": "node --test test-sdk/*.test.mjs",
+      "exitCode": 0,
+      "stdoutAndStderr": "docs/validation/raw/a1-sdk-replay.log"
+    },
+    {
+      "cwd": "test/scratch/a1",
+      "command": "node tools/local-integration.mjs",
+      "exitCode": 0,
+      "stdout": "docs/validation/raw/a1-core-local-replay.json",
+      "stderr": "docs/validation/raw/a1-core-local-replay.stderr.log"
+    }
+  ]
+}

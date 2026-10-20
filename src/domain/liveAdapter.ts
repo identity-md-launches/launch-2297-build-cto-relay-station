@@ -3,20 +3,20 @@ import { IntegrationPendingError } from "./types";
 import { A1_SOURCE } from "../config";
 
 /**
- * Live adapter. A1 has not delivered an accepted SDK, ABI or deployment, so every operation
- * fails closed. No selector, address, method or transaction is synthesized here. When A1 ships,
- * replace the bodies with calls into the pinned A1 SDK (see docs/A1-HANDOFF.md).
+ * A1 source/Node SDK is delivered, but its release has no product deployment and is not
+ * production-ready. W1's browser bridge is unvalidated, so operations fail closed. No selector,
+ * address or transaction is synthesized here (see docs/A1-HANDOFF.md).
  */
 const pending = (what: string) => () => Promise.reject(new IntegrationPendingError(what));
 
 export function createLiveAdapter(): RelayAdapter {
   const status: IntegrationStatus = {
     state: "A1_INTEGRATION_PENDING",
-    summary: "A1 尚未交付可用的 SDK、ABI 与部署配置，公开数据与链上操作均不可用。",
+    summary: "A1 已交付源码与 Node SDK，尚无已验证的产品部署；浏览器集成未完成，公开数据与链上操作仍不可用。",
     missing: [
-      "A1 交付仓库与提交（含 SDK/CLI 与 ABI）",
       "已验证的链 ID、Factory 地址与公开 RPC",
-      "A1 不可变能力配置（类型、容量、大小上限、发布开关）",
+      "浏览器 SDK 适配与不可变配置核验",
+      "W1 接入真实 A1 的本地链验收",
     ],
     a1: { ...A1_SOURCE },
   };

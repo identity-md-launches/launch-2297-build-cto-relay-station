@@ -2,7 +2,7 @@
 
 Chinese-first static product workspace for the A1 Agent core. This stage preserves the existing React UI and adds executed validation and focused behavioral/security repairs.
 
-**A1_INTEGRATION_PENDING.** The public A1 job has no delivered repository, final SDK/ABI or verified deployment configuration at the recorded checks. The default page reports public data unavailable and disables all business operations. `#/demo` is an explicit, persistently labelled local fixture workspace. It never asks a real wallet to sign. No fixture result is an A1-chain integration result.
+**A1_INTEGRATION_PENDING.** A1 has delivered source/ABI and a Node SDK at commit `9b0294e7ab19060bd00c489fbe032cf248528e0d`, but its release has no product deployment and marks production readiness false. W1's browser bridge and actual W1-to-A1 local-chain acceptance remain **NOT_RUN**. The default page reports public data unavailable and disables all business operations. `#/demo` is an explicit, persistently labelled local fixture workspace. It never asks a real wallet to sign. No fixture result is an A1-chain integration result. The unmodified A1 dependency harness was separately replayed locally; see the [handoff](docs/A1-HANDOFF.md).
 
 ## Install, rebuild and preview
 
@@ -54,7 +54,7 @@ npx playwright install chromium webkit
 node scripts/validate.mjs
 ```
 
-This sequentially runs typecheck, Vitest, production build and all five browser projects, retaining actual command results under `docs/validation/raw/`. Browser runtime libraries must be available; the install command above is setup guidance, not a claim that an arbitrary host is preconfigured.
+This sequentially runs typecheck, Vitest, production build and all five browser projects, retaining actual command results under `docs/validation/raw/`. It also hashes the source/tests/config/export immediately after the build and checks they stayed unchanged through the browser run. `node scripts/record-release.mjs` refuses to generate release pins if those checked bytes later change. Browser runtime libraries must be available; the install command above is setup guidance, not a claim that an arbitrary host is preconfigured.
 
 In this validation run Chromium uses the supplied browser via `tests/run-browsers.mjs --imd-chromium`; WebKit was downloaded with the locked CLI into temporary storage and supplied runtime libraries there. The exact execution command is in [validation/README.md](docs/validation/README.md). Neither browser binaries nor dependencies/caches are bundled in Git.
 

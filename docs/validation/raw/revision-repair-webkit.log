@@ -1,0 +1,16 @@
+[WebServer] (node:23) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:36) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:56) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [webkit-mobile] › tests/e2e/revision.spec.ts:17:1 › refused retry goes through a fresh fee/spender review and the new account's exact allowance; an unknown retry is journaled by its own hash/nonce (4.6s)
+  ✓  2 [webkit-mobile] › tests/e2e/revision.spec.ts:81:1 › sponsorship progress shows the complete purchase hash and sponsor with copy controls (2.0s)
+  ✓  3 [webkit-mobile] › tests/e2e/revision.spec.ts:99:1 › switching a populated draft to image yields a create draft with no inputs (3.0s)
+  ✓  4 [webkit-mobile] › tests/e2e/revision.spec.ts:129:1 › a verified single output updates the file stage; a wide Markdown table stays readable in its own scroll region (5.0s)
+  ✓  5 [webkit-mobile] › tests/e2e/revision.spec.ts:210:1 › an unavailable output marks the file stage failed without a verified badge (2.4s)
+
+  5 passed (18.6s)

@@ -1,0 +1,675 @@
+[WebServer] (node:24) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:37) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:57) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [chromium-mobile] › tests/e2e/revision.spec.ts:16:1 › refused retry goes through a fresh fee/spender review and the new account's exact allowance; an unknown retry is journaled by its own hash/nonce (7.0s)
+(node:127) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 [chromium-mobile] › tests/e2e/revision.spec.ts:80:1 › sponsorship progress shows the complete purchase hash and sponsor with copy controls (6.9s)
+(node:197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  3 [chromium-mobile] › tests/e2e/revision.spec.ts:98:1 › switching a populated draft to image yields a create draft with no inputs (5.5s)
+(node:269) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  4 [chromium-mobile] › tests/e2e/revision.spec.ts:128:1 › a verified single output updates the file stage; a wide Markdown table stays readable in its own scroll region (7.9s)
+(node:337) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  5 [chromium-mobile] › tests/e2e/revision.spec.ts:180:1 › an unavailable output marks the file stage failed without a verified badge (7.2s)
+
+
+  1) [chromium-mobile] › tests/e2e/revision.spec.ts:16:1 › refused retry goes through a fresh fee/spender review and the new account's exact allowance; an unknown retry is journaled by its own hash/nonce 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('#progress > ul > li').first().getByLabel('重试资助预览')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" locator('#progress > ul > li').first().getByLabel('重试资助预览') with timeout 5000ms
+      - waiting for locator('#progress > ul > li').first().getByLabel('重试资助预览')
+
+
+      30 |   await page.locator("#progress > ul > li").first().getByRole("button", { name: "用相同请求体重试（需再次支付）" }).click();
+      31 |   const panel = page.locator("#progress > ul > li").first().getByLabel("重试资助预览");
+    > 32 |   await expect(panel).toBeVisible();
+         |                       ^
+      33 |   await expect(panel).toContainText("第 2 次尝试");
+      34 |   await expect(panel).toContainText("授权对象");
+      35 |   await expect(panel).toContainText("当前价格");
+        at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:32:23
+
+    Error Context: test/scratch/browser-artifacts/revision-refused-retry-goe-38cd7-naled-by-its-own-hash-nonce-chromium-mobile/error-context.md
+
+  2) [chromium-mobile] › tests/e2e/revision.spec.ts:80:1 › sponsorship progress shows the complete purchase hash and sponsor with copy controls 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })
+    Expected: "0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toHaveText" locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' }) with timeout 5000ms
+      - waiting for locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })
+
+
+      89 |   const state = await fixtureState(page);
+      90 |   const sp = state.sponsorships[0];
+    > 91 |   await expect(progress.locator("code", { hasText: sp.txHash })).toHaveText(sp.txHash);
+         |                                                                  ^
+      92 |   await expect(progress.locator("code", { hasText: sp.sponsor })).toHaveText(sp.sponsor);
+      93 |   await expect(progress.getByRole("button", { name: "复制交易哈希" })).toBeVisible();
+      94 |   await expect(progress.getByRole("button", { name: "复制资助者地址" })).toBeVisible();
+        at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:91:66
+
+    Error Context: test/scratch/browser-artifacts/revision-sponsorship-progr-69c28--sponsor-with-copy-controls-chromium-mobile/error-context.md
+
+  3) [chromium-mobile] › tests/e2e/revision.spec.ts:98:1 › switching a populated draft to image yields a create draft with no inputs 
+
+    Error: expect(locator).not.toBeChecked() failed
+
+    Locator:  locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')
+    Expected: not checked
+    Received: checked
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toBeChecked" locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮') with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')
+        14 × locator resolved to <input disabled type="checkbox"/>
+           - unexpected value "checked"
+
+
+      104 |   await form.getByLabel("要求").fill("一张新的封面");
+      105 |   await form.getByLabel("类型").selectOption({ label: "图片" });
+    > 106 |   await expect(form.getByLabel("site · 单页网站 · 第 3 轮")).not.toBeChecked();
+          |                                                            ^
+      107 |   await expect(form.getByLabel("新槽位名称")).toHaveValue("cover-new");
+      108 |   await form.getByRole("button", { name: "预览提案" }).click();
+      109 |   await expect(form.getByRole("button", { name: "签名并提交提案" })).toBeVisible();
+        at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:106:60
+
+    Error Context: test/scratch/browser-artifacts/revision-switching-a-popul-9ed39-create-draft-with-no-inputs-chromium-mobile/error-context.md
+
+  4) [chromium-mobile] › tests/e2e/revision.spec.ts:128:1 › a verified single output updates the file stage; a wide Markdown table stays readable in its own scroll region 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })
+    Expected substring: "本机已校验"
+    Received string:    "文件校验等待中"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms
+      - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })
+        14 × locator resolved to <li class="stage st-pending">…</li>
+           - unexpected value "文件校验等待中"
+
+
+      153 |   await asset.getByRole("button", { name: "下载并校验" }).click();
+      154 |   await expect(asset.getByText("已校验：与 A1 描述一致")).toBeVisible();
+    > 155 |   await expect(progress.locator(".stage", { hasText: "文件校验" })).toContainText("本机已校验");
+          |                                                                 ^
+      156 |   await expect(progress).toContainText("不代表链上验证");
+      157 |
+      158 |   const region = asset.getByRole("region", { name: "文档表格（可横向滚动）" });
+        at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:155:65
+
+    Error Context: test/scratch/browser-artifacts/revision-a-verified-single-12b84-le-in-its-own-scroll-region-chromium-mobile/error-context.md
+
+  5) [chromium-mobile] › tests/e2e/revision.spec.ts:180:1 › an unavailable output marks the file stage failed without a verified badge 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })
+    Expected substring: "本机校验失败"
+    Received string:    "文件校验等待中"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms
+      - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })
+        14 × locator resolved to <li class="stage st-pending">…</li>
+           - unexpected value "文件校验等待中"
+
+
+      198 |   await expect(asset.getByText(/无法获取文件/)).toBeVisible();
+      199 |   await expect(asset.getByText("已校验：与 A1 描述一致")).toHaveCount(0);
+    > 200 |   await expect(page.locator("#progress > ul > li").first().locator(".stage", { hasText: "文件校验" })).toContainText("本机校验失败");
+          |                                                                                                    ^
+      201 | });
+      202 |
+        at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:200:100
+
+    Error Context: test/scratch/browser-artifacts/revision-an-unavailable-ou-3e009-ed-without-a-verified-badge-chromium-mobile/error-context.md
+
+  5 failed
+    [chromium-mobile] › tests/e2e/revision.spec.ts:16:1 › refused retry goes through a fresh fee/spender review and the new account's exact allowance; an unknown retry is journaled by its own hash/nonce 
+    [chromium-mobile] › tests/e2e/revision.spec.ts:80:1 › sponsorship progress shows the complete purchase hash and sponsor with copy controls 
+    [chromium-mobile] › tests/e2e/revision.spec.ts:98:1 › switching a populated draft to image yields a create draft with no inputs 
+    [chromium-mobile] › tests/e2e/revision.spec.ts:128:1 › a verified single output updates the file stage; a wide Markdown table stays readable in its own scroll region 
+    [chromium-mobile] › tests/e2e/revision.spec.ts:180:1 › an unavailable output marks the file stage failed without a verified badge 
+{
+  "config": {
+    "argv": [
+      "/usr/bin/node",
+      "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/node_modules/@playwright/test/cli.js",
+      "test",
+      "tests/e2e/revision.spec.ts",
+      "--project=chromium-mobile",
+      "--reporter=list,json"
+    ],
+    "configFile": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/playwright.config.ts",
+    "rootDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-desktop",
+        "name": "chromium-desktop",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-mobile",
+        "name": "chromium-mobile",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium-narrow",
+        "name": "chromium-narrow",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-desktop",
+        "name": "webkit-desktop",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit-mobile",
+        "name": "webkit-mobile",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "chromium-mobile",
+        "testDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "snapshotDir": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e",
+        "testIgnore": [],
+        "testMatch": "**/*.@(spec|test).?(c|m)[jt]s?(x)",
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://127.0.0.1:4173/",
+          "trace": "off",
+          "screenshot": "off",
+          "userAgent": "Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/156.0.8078.4 Mobile Safari/537.36",
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "screen": {
+            "width": 412,
+            "height": 915
+          },
+          "deviceScaleFactor": 2.625,
+          "isMobile": true,
+          "hasTouch": true,
+          "defaultBrowserType": "chromium",
+          "launchOptions": {
+            "executablePath": "/opt/imd-tools/ms-playwright/chromium_headless_shell-1246/chrome-headless-shell-linux64/chrome-headless-shell"
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "chromium-mobile"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --port 4173 --strictPort --host 127.0.0.1",
+      "url": "http://127.0.0.1:4173/",
+      "reuseExistingServer": false,
+      "timeout": 60000
+    }
+  },
+  "suites": [
+    {
+      "title": "revision.spec.ts",
+      "file": "revision.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "refused retry goes through a fresh fee/spender review and the new account's exact allowance; an unknown retry is journaled by its own hash/nonce",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6962,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().getByLabel('重试资助预览')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#progress > ul > li').first().getByLabel('重试资助预览') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().getByLabel('重试资助预览')\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().getByLabel('重试资助预览')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#progress > ul > li').first().getByLabel('重试资助预览') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().getByLabel('重试资助预览')\u001b[22m\n\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:32:23",
+                    "location": {
+                      "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                      "column": 23,
+                      "line": 32
+                    },
+                    "snippet": "  30 |   await page.locator(\"#progress > ul > li\").first().getByRole(\"button\", { name: \"用相同请求体重试（需再次支付）\" }).click();\n  31 |   const panel = page.locator(\"#progress > ul > li\").first().getByLabel(\"重试资助预览\");\n> 32 |   await expect(panel).toBeVisible();\n     |                       ^\n  33 |   await expect(panel).toContainText(\"第 2 次尝试\");\n  34 |   await expect(panel).toContainText(\"授权对象\");\n  35 |   await expect(panel).toContainText(\"当前价格\");"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                        "column": 23,
+                        "line": 32
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().getByLabel('重试资助预览')\nExpected: visible\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toBeVisible\" locator('#progress > ul > li').first().getByLabel('重试资助预览') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().getByLabel('重试资助预览')\u001b[22m\n\n\n  30 |   await page.locator(\"#progress > ul > li\").first().getByRole(\"button\", { name: \"用相同请求体重试（需再次支付）\" }).click();\n  31 |   const panel = page.locator(\"#progress > ul > li\").first().getByLabel(\"重试资助预览\");\n> 32 |   await expect(panel).toBeVisible();\n     |                       ^\n  33 |   await expect(panel).toContainText(\"第 2 次尝试\");\n  34 |   await expect(panel).toContainText(\"授权对象\");\n  35 |   await expect(panel).toContainText(\"当前价格\");\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:32:23"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T15:43:07.456Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts/revision-refused-retry-goe-38cd7-naled-by-its-own-hash-nonce-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                    "column": 23,
+                    "line": 32
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6220a107f9fc0395c360-12a6177e251deacb1a77",
+          "file": "revision.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "sponsorship progress shows the complete purchase hash and sponsor with copy controls",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6859,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\nExpected: \u001b[32m\"0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\nExpected: \u001b[32m\"0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\u001b[22m\n\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:91:66",
+                    "location": {
+                      "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                      "column": 66,
+                      "line": 91
+                    },
+                    "snippet": "  89 |   const state = await fixtureState(page);\n  90 |   const sp = state.sponsorships[0];\n> 91 |   await expect(progress.locator(\"code\", { hasText: sp.txHash })).toHaveText(sp.txHash);\n     |                                                                  ^\n  92 |   await expect(progress.locator(\"code\", { hasText: sp.sponsor })).toHaveText(sp.sponsor);\n  93 |   await expect(progress.getByRole(\"button\", { name: \"复制交易哈希\" })).toBeVisible();\n  94 |   await expect(progress.getByRole(\"button\", { name: \"复制资助者地址\" })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                        "column": 66,
+                        "line": 91
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoHaveText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\nExpected: \u001b[32m\"0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a\"\u001b[39m\nTimeout: 5000ms\nError: element(s) not found\n\nCall log:\n\u001b[2m  - Expect \"toHaveText\" locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('code').filter({ hasText: '0x6308b37379629797f7084bde8ef81d138ac34d311b7bebfa8470828f6065329a' })\u001b[22m\n\n\n  89 |   const state = await fixtureState(page);\n  90 |   const sp = state.sponsorships[0];\n> 91 |   await expect(progress.locator(\"code\", { hasText: sp.txHash })).toHaveText(sp.txHash);\n     |                                                                  ^\n  92 |   await expect(progress.locator(\"code\", { hasText: sp.sponsor })).toHaveText(sp.sponsor);\n  93 |   await expect(progress.getByRole(\"button\", { name: \"复制交易哈希\" })).toBeVisible();\n  94 |   await expect(progress.getByRole(\"button\", { name: \"复制资助者地址\" })).toBeVisible();\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:91:66"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T15:43:15.152Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts/revision-sponsorship-progr-69c28--sponsor-with-copy-controls-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                    "column": 66,
+                    "line": 91
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6220a107f9fc0395c360-63c30294cf91d6e1366d",
+          "file": "revision.spec.ts",
+          "line": 80,
+          "column": 1
+        },
+        {
+          "title": "switching a populated draft to image yields a create draft with no inputs",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 5529,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeChecked\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\nExpected: not checked\nReceived: checked\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeChecked\" locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\u001b[22m\n\u001b[2m    14 × locator resolved to <input disabled type=\"checkbox\"/>\u001b[22m\n\u001b[2m       - unexpected value \"checked\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeChecked\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\nExpected: not checked\nReceived: checked\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeChecked\" locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\u001b[22m\n\u001b[2m    14 × locator resolved to <input disabled type=\"checkbox\"/>\u001b[22m\n\u001b[2m       - unexpected value \"checked\"\u001b[22m\n\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:106:60",
+                    "location": {
+                      "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                      "column": 60,
+                      "line": 106
+                    },
+                    "snippet": "  104 |   await form.getByLabel(\"要求\").fill(\"一张新的封面\");\n  105 |   await form.getByLabel(\"类型\").selectOption({ label: \"图片\" });\n> 106 |   await expect(form.getByLabel(\"site · 单页网站 · 第 3 轮\")).not.toBeChecked();\n      |                                                            ^\n  107 |   await expect(form.getByLabel(\"新槽位名称\")).toHaveValue(\"cover-new\");\n  108 |   await form.getByRole(\"button\", { name: \"预览提案\" }).click();\n  109 |   await expect(form.getByRole(\"button\", { name: \"签名并提交提案\" })).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                        "column": 60,
+                        "line": 106
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).not.\u001b[22mtoBeChecked\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\nExpected: not checked\nReceived: checked\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"not toBeChecked\" locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('form').filter({ has: getByRole('heading', { name: '提出工作' }) }).getByLabel('site · 单页网站 · 第 3 轮')\u001b[22m\n\u001b[2m    14 × locator resolved to <input disabled type=\"checkbox\"/>\u001b[22m\n\u001b[2m       - unexpected value \"checked\"\u001b[22m\n\n\n  104 |   await form.getByLabel(\"要求\").fill(\"一张新的封面\");\n  105 |   await form.getByLabel(\"类型\").selectOption({ label: \"图片\" });\n> 106 |   await expect(form.getByLabel(\"site · 单页网站 · 第 3 轮\")).not.toBeChecked();\n      |                                                            ^\n  107 |   await expect(form.getByLabel(\"新槽位名称\")).toHaveValue(\"cover-new\");\n  108 |   await form.getByRole(\"button\", { name: \"预览提案\" }).click();\n  109 |   await expect(form.getByRole(\"button\", { name: \"签名并提交提案\" })).toBeVisible();\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:106:60"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T15:43:22.723Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts/revision-switching-a-popul-9ed39-create-draft-with-no-inputs-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                    "column": 60,
+                    "line": 106
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6220a107f9fc0395c360-74484ff8aa43b111db58",
+          "file": "revision.spec.ts",
+          "line": 98,
+          "column": 1
+        },
+        {
+          "title": "a verified single output updates the file stage; a wide Markdown table stays readable in its own scroll region",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7903,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机已校验\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机已校验\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:155:65",
+                    "location": {
+                      "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                      "column": 65,
+                      "line": 155
+                    },
+                    "snippet": "  153 |   await asset.getByRole(\"button\", { name: \"下载并校验\" }).click();\n  154 |   await expect(asset.getByText(\"已校验：与 A1 描述一致\")).toBeVisible();\n> 155 |   await expect(progress.locator(\".stage\", { hasText: \"文件校验\" })).toContainText(\"本机已校验\");\n      |                                                                 ^\n  156 |   await expect(progress).toContainText(\"不代表链上验证\");\n  157 |\n  158 |   const region = asset.getByRole(\"region\", { name: \"文档表格（可横向滚动）\" });"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                        "column": 65,
+                        "line": 155
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机已校验\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n\n\n  153 |   await asset.getByRole(\"button\", { name: \"下载并校验\" }).click();\n  154 |   await expect(asset.getByText(\"已校验：与 A1 描述一致\")).toBeVisible();\n> 155 |   await expect(progress.locator(\".stage\", { hasText: \"文件校验\" })).toContainText(\"本机已校验\");\n      |                                                                 ^\n  156 |   await expect(progress).toContainText(\"不代表链上验证\");\n  157 |\n  158 |   const region = asset.getByRole(\"region\", { name: \"文档表格（可横向滚动）\" });\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:155:65"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T15:43:29.002Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts/revision-a-verified-single-12b84-le-in-its-own-scroll-region-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                    "column": 65,
+                    "line": 155
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6220a107f9fc0395c360-e611940b5e61d1522bdb",
+          "file": "revision.spec.ts",
+          "line": 128,
+          "column": 1
+        },
+        {
+          "title": "an unavailable output marks the file stage failed without a verified badge",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium-mobile",
+              "projectName": "chromium-mobile",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7249,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机校验失败\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机校验失败\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:200:100",
+                    "location": {
+                      "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                      "column": 100,
+                      "line": 200
+                    },
+                    "snippet": "  198 |   await expect(asset.getByText(/无法获取文件/)).toBeVisible();\n  199 |   await expect(asset.getByText(\"已校验：与 A1 描述一致\")).toHaveCount(0);\n> 200 |   await expect(page.locator(\"#progress > ul > li\").first().locator(\".stage\", { hasText: \"文件校验\" })).toContainText(\"本机校验失败\");\n      |                                                                                                    ^\n  201 | });\n  202 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                        "column": 100,
+                        "line": 200
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\nExpected substring: \u001b[32m\"本机校验失败\"\u001b[39m\nReceived string:    \u001b[31m\"文件校验等待中\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' }) with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#progress > ul > li').first().locator('.stage').filter({ hasText: '文件校验' })\u001b[22m\n\u001b[2m    14 × locator resolved to <li class=\"stage st-pending\">…</li>\u001b[22m\n\u001b[2m       - unexpected value \"文件校验等待中\"\u001b[22m\n\n\n  198 |   await expect(asset.getByText(/无法获取文件/)).toBeVisible();\n  199 |   await expect(asset.getByText(\"已校验：与 A1 描述一致\")).toHaveCount(0);\n> 200 |   await expect(page.locator(\"#progress > ul > li\").first().locator(\".stage\", { hasText: \"文件校验\" })).toContainText(\"本机校验失败\");\n      |                                                                                                    ^\n  201 | });\n  202 |\n    at /home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts:200:100"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-20T15:43:37.606Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/test/scratch/browser-artifacts/revision-an-unavailable-ou-3e009-ed-without-a-verified-badge-chromium-mobile/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/seat17/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/revision.spec.ts",
+                    "column": 100,
+                    "line": 200
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "6220a107f9fc0395c360-9b81a5da6154515fb672",
+          "file": "revision.spec.ts",
+          "line": 180,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-20T15:43:05.962Z",
+    "duration": 39182.918999999994,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  }
+}

@@ -1,5 +1,6 @@
 import { test, expect } from "./harness";
 import type { Page } from "@playwright/test";
+import { writeFile } from "node:fs/promises";
 
 // Regression cases for the reviewed revision findings. Fixture adapter only; no A1 or real wallet.
 async function openDemo(page: Page, hash = "#/demo") {
@@ -74,7 +75,7 @@ test("refused retry goes through a fresh fee/spender review and the new account'
   const settled = await fixtureState(page);
   expect(settled.sponsorships).toHaveLength(after.sponsorships.length);
   expect(settled.nonces[bAddr]).toBe(2);
-  await page.screenshot({ path: `docs/validation/screenshots/${test.info().project.name}-retry-review.png`, fullPage: false });
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-retry-review.png`, fullPage: false });
 });
 
 test("sponsorship progress shows the complete purchase hash and sponsor with copy controls", async ({ page }) => {
@@ -163,17 +164,46 @@ test("a verified single output updates the file stage; a wide Markdown table sta
     const rects = ths.map(glyph);
     let overlap = 0;
     for (let i = 1; i < rects.length; i++) overlap = Math.max(overlap, rects[i - 1].right - rects[i].left);
-    return { minCell: Math.min(...ths.map((t) => t.getBoundingClientRect().width)), glyph: rects[0].width, overlap, region: el.getBoundingClientRect().right, vw: innerWidth };
+    const preview = el.closest(".preview")!;
+    const panel = el.closest("#assets")!;
+    const download = preview.querySelector<HTMLAnchorElement>("a[download]")!;
+    const box = (node: Element) => {
+      const { left, right, width } = node.getBoundingClientRect();
+      return { left, right, width };
+    };
+    return { minCell: Math.min(...ths.map((t) => t.getBoundingClientRect().width)), glyph: rects[0].width, overlap,
+      region: box(el), preview: box(preview), panel: box(panel), download: box(download),
+      children: Array.from(preview.children).map(box), clientWidth: el.clientWidth, scrollWidth: el.scrollWidth,
+      hostOverflow: document.documentElement.scrollWidth - innerWidth, vw: innerWidth };
   });
   expect(m.minCell).toBeGreaterThan(m.glyph);
   expect(m.overlap).toBeLessThanOrEqual(0);
-  expect(m.region).toBeLessThanOrEqual(m.vw);
+  expect(m.hostOverflow).toBe(0);
+  expect(m.clientWidth).toBeLessThan(m.scrollWidth);
+  for (const child of [m.preview, m.region, m.download, ...m.children]) {
+    expect(child.left).toBeGreaterThanOrEqual(m.panel.left);
+    expect(child.right).toBeLessThanOrEqual(m.panel.right);
+    expect(child.right).toBeLessThanOrEqual(m.vw);
+  }
   await region.focus();
   await expect(region).toBeFocused();
   await page.keyboard.press("ArrowRight");
-  await asset.screenshot({ path: `docs/validation/screenshots/${test.info().project.name}-wide-table.png` });
+  await expect.poll(() => region.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+  await asset.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-wide-table.png` });
 
-  await asset.getByRole("link", { name: "下载已校验文件" }).click();
+  const link = asset.getByRole("link", { name: "下载已校验文件" });
+  await link.scrollIntoViewIfNeeded();
+  const clickable = await link.evaluate((el) => {
+    const r = el.getBoundingClientRect();
+    const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return !!hit && el.contains(hit);
+  });
+  expect(clickable).toBe(true);
+  await writeFile(`docs/validation/raw/${test.info().project.name}-table-measurements.json`, JSON.stringify({ ...m, clickable, scrollLeft: await region.evaluate((el) => el.scrollLeft) }, null, 2));
+
+  const downloaded = page.waitForEvent("download");
+  await link.click();
+  expect((await downloaded).suggestedFilename()).toBe("wide-table.md");
   await expect(progress.locator(".stage", { hasText: "文件校验" })).toContainText("本机已校验");
 });
 

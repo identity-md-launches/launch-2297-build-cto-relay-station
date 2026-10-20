@@ -3,7 +3,7 @@
 | Area | Final observation |
 | --- | --- |
 | Product requirements | Fixture UI/validation complete; real A1 binding explicitly pending; no live-data substitution |
-| Reproduced functional/security defects | Fixed in the tested fixture paths; final 27 unit and 95 browser cases pass |
+| Reproduced functional/security defects | Fixed in the tested fixture paths; final 28 unit and 120 browser cases pass |
 | First screen at 390 | Project/create action and workspace shortcuts visible; screenshots retained |
 | Independent design probe | taste@1: 16/16 on the default production entry page |
 | Rendered contrast sample | Six actual UI pairs pass 4.5:1; narrow inputs are 16px; reduced-motion transitions are 0s |
@@ -37,7 +37,7 @@ This is a Chinese project workspace carried by a consistent stone/green hierarch
 | “actual download plus SHA256/length/format verification” | Met on actual deterministic fixture bytes: browser verification and independent Node SHA-256/length assertions; missing, tampered, fake/truncated and oversized images rejected |
 | “Sanitize Markdown; isolate generated HTML” | Met in tested malicious fixtures: no active elements/navigation/forms, opaque sandbox, CSP, no external requests/messages/storage access or host navigation; CSS/inline resource bounds checked |
 | “320/390/1440 … keyboard/focus … console/resource errors” | Met in the executed five-project matrix; focus wrap/return, inert background, long values, no overflow; zero unexpected errors/resources |
-| “Production adapter … explicit disabled pending status” | Met: every live operation rejects, capabilities false, no invented ABI/config; actual delivery pin/imports unavailable |
+| “Production adapter … explicit disabled pending status” | Met: every live operation rejects, capabilities false, no invented ABI/config; actual public delivery pinned; Node SDK/deployment/browser-bridge gates documented |
 | “independent review” | Independent automated probe/measurements executed and retained. Source review is by this contributor; external peer audit is not claimed |
 
 ## Six-domain coverage
@@ -74,8 +74,17 @@ These are repaired findings, not open reports against the final code. Locations 
 
 Additional test repairs: removed Chromium-desktop-only skips, used the browser title API for hidden title text, retained exact expected WebKit sandbox-denial diagnostics rather than treating them as app errors, and captured screenshots at CSS pixel scale to fit the submission budget. The one-shot rejection control now clears visually after its simulated rejection.
 
+## Reopened revision: reproduced findings
+
+| Finding / severity | Reproduction, smallest repair and final recheck |
+| --- | --- |
+| `6af9aa59bd78e3fa8d3bb2cb090369b7f7e6f5518763464ec877716f6df0f59c` HIGH: stale submitted export/evidence | Reproduced against the submitted `dist/`: all five Chromium-mobile revision cases failed, with old `index-BGwPVQjO.js` / `index-DCBZ4oQ3.css` and twelve mismatched source/test pins. Raw evidence: `docs/validation/raw/revision-submitted-export.log`, `revision-before.json`. Rebuilt the final export and ran all 24 cases in all five projects, including the five regressions. The existing retry fee/allowance review, account-B journal, full identifier copy controls, image draft reset and file-stage repair are now in the shipped bundle. `scripts/validate.mjs` additionally records the exact built/tested source/config/export hashes; `scripts/record-release.mjs` refuses later mismatches. Final evidence/release pins are regenerated. |
+| `05b3e0148cc4800d46d09493e2738c8130f03779f7e7d7dbc399c5b57fdced06` HIGH: table expands implicit preview column | Reproduced after rebuilding the unchanged revised source: the 390px table case failed with 875px host overflow (`docs/validation/raw/revision-source-before-table.log`). `src/styles.css:184` now gives `.preview` one `minmax(0, 1fr)` column. Existing readable cells, labelled region and keyboard access are retained. `tests/e2e/revision.spec.ts:129` checks every preview child/download inside the asset panel, a truly overflowing inner scroller, nonoverlapping glyphs, ArrowRight scrolling, an unobstructed download hit target and a real successful download. All five widths/engines pass; measured geometry and screenshots are retained. |
+
+A1 was re-read at build/integration time and now has a public source delivery. Its Node SDK, ABIs and fixed release config were inspected and SHA-256-pinned at commit `9b0294e7ab19060bd00c489fbe032cf248528e0d`. The unmodified dependency SDK suite (20 tests) and local EVM harness (33 transactions) passed in a temporary extraction. This is dependency replay only: the product still has no verified A1 deployment/browser bridge, all live capabilities remain false, and actual W1-to-A1 local-chain and mainnet integration remain **NOT_RUN**. See `docs/A1-HANDOFF.md`.
+
 ## Readiness and remaining work
 
-The useful UI-validation deliverable is complete for the explicitly labelled fixture scope. **Live product readiness remains blocked by A1 delivery and real local-chain acceptance.** The live route/SDK/witness/unsigned-transaction/recovery mapping is not implemented, and enabling a flag alone would not complete it. See `docs/A1-HANDOFF.md` for exact next steps and NOT_RUN cases.
+The useful UI-validation deliverable is complete for the explicitly labelled fixture scope. **Live product readiness remains blocked by the unimplemented W1 browser bridge, missing verified product deployment and W1-to-A1 local-chain acceptance.** The live route/SDK/witness/unsigned-transaction/recovery mapping is not implemented, and enabling a flag alone would not complete it. See `docs/A1-HANDOFF.md` for exact next steps and NOT_RUN cases.
 
 Real extension/mobile/passkey sessions, actual ABI/contract configuration, A1 manifest parsing/callback authentication, real admission/execution, actual publishing/Git observation and mainnet consumption are not certified by this work. PNG is the executed image fixture; actual JPEG/WebP files were not part of the browser journey. Independent automated measurements carry no independent network approval authority, and no second-author source audit is represented as having run.

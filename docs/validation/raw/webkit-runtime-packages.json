@@ -1,0 +1,188 @@
+[
+  {
+    "package": "libgstreamer-gl1.0-0",
+    "version": "1.24.2-1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/g/gst-plugins-base1.0/libgstreamer-gl1.0-0_1.24.2-1_amd64.deb",
+    "sha256": "f63c53c578aff2504da2c81a430047215ed8e73e3a2ca812b1fe84ec48b6b9ff"
+  },
+  {
+    "package": "libevent-2.1-7t64",
+    "version": "2.1.12-stable-9ubuntu2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libe/libevent/libevent-2.1-7t64_2.1.12-stable-9ubuntu2_amd64.deb",
+    "sha256": "f95eddfc9e9028567a21b8162a1cb8aae96b2fb168f149c0a5b01d72bfd42471"
+  },
+  {
+    "package": "libopus0",
+    "version": "1.4-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/o/opus/libopus0_1.4-1build1_amd64.deb",
+    "sha256": "6d8da32a832e655c9603543b47a0bc90c6f60bdee0c00fe7499bd50acad566cf"
+  },
+  {
+    "package": "libgstreamer1.0-0",
+    "version": "1.24.2-1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/g/gstreamer1.0/libgstreamer1.0-0_1.24.2-1_amd64.deb",
+    "sha256": "90252639430f75720aa5d7e1d961053212130b1df6835a2eec54387fc8e12b75"
+  },
+  {
+    "package": "libgstreamer-plugins-base1.0-0",
+    "version": "1.24.2-1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/g/gst-plugins-base1.0/libgstreamer-plugins-base1.0-0_1.24.2-1_amd64.deb",
+    "sha256": "e265685c7506306c59982b6289f9088b21084485b1a64d9a26a90a3b6b94cf64"
+  },
+  {
+    "package": "libgstreamer-plugins-bad1.0-0",
+    "version": "1.24.2-1ubuntu4",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/g/gst-plugins-bad1.0/libgstreamer-plugins-bad1.0-0_1.24.2-1ubuntu4_amd64.deb",
+    "sha256": "6e8da41c0cbb2070f3477cf02360c2ce2eb55e825ba09e12b4270b3254e04f45"
+  },
+  {
+    "package": "libvpx9",
+    "version": "1.14.0-1ubuntu2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libv/libvpx/libvpx9_1.14.0-1ubuntu2_amd64.deb",
+    "sha256": "bf7f2eb5a17d3c4f57df0c118df2317880c9840eeec8f33f8b39c94f2393e34e"
+  },
+  {
+    "package": "libx264-164",
+    "version": "2:0.164.3108+git31e19f9-1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/x/x264/libx264-164_0.164.3108+git31e19f9-1_amd64.deb",
+    "sha256": "7a410be6797c32357a2b7f0cc68ee14ae0e3b652bb17d16cdc941e4d830c7842"
+  },
+  {
+    "package": "libwebpdemux2",
+    "version": "1.3.2-0.4build3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libw/libwebp/libwebpdemux2_1.3.2-0.4build3_amd64.deb",
+    "sha256": "15e98f127e1fdbf0889cf4b2f5604b60a6da0b988f20bf34731c9a2307d490d6"
+  },
+  {
+    "package": "libavif16",
+    "version": "1.0.4-1ubuntu3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/liba/libavif/libavif16_1.0.4-1ubuntu3_amd64.deb",
+    "sha256": "b295a9954a4b756af05ff381d9808f3c0c582a111b7e4c7678cfe13de9ae8818"
+  },
+  {
+    "package": "libharfbuzz-icu0",
+    "version": "8.3.0-2build2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/h/harfbuzz/libharfbuzz-icu0_8.3.0-2build2_amd64.deb",
+    "sha256": "9098670758e60b190d7edf367ad57e954bfc1b2a616def3f4e281062e036a843"
+  },
+  {
+    "package": "libepoxy0",
+    "version": "1.5.10-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libe/libepoxy/libepoxy0_1.5.10-1build1_amd64.deb",
+    "sha256": "e2e754da4e7fb89021476b093cb5ebe9b1859a688fa37739809e529627d39f1f"
+  },
+  {
+    "package": "libwayland-server0",
+    "version": "1.22.0-2.1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/w/wayland/libwayland-server0_1.22.0-2.1build1_amd64.deb",
+    "sha256": "edbfa4b6857691ae922cc768a753fab230eee9e956aa2ce4f2eaa8d9ad777dca"
+  },
+  {
+    "package": "libmanette-0.2-0",
+    "version": "0.2.7-1build2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libm/libmanette/libmanette-0.2-0_0.2.7-1build2_amd64.deb",
+    "sha256": "8fbb67e94abf563c01398ad7458df1a6824f19a0b4337f67d61c0889771805db"
+  },
+  {
+    "package": "libenchant-2-2",
+    "version": "2.3.3-2build2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/e/enchant-2/libenchant-2-2_2.3.3-2build2_amd64.deb",
+    "sha256": "4faecb5cee57ff00649b3ea4d83c072d9da2670797b7d2854708ff60cef17426"
+  },
+  {
+    "package": "libsecret-1-0",
+    "version": "0.21.4-1build3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libs/libsecret/libsecret-1-0_0.21.4-1build3_amd64.deb",
+    "sha256": "7d7263ffc92c33042328f99c93433a846e8d9e549876dab18ba18606e6541ecd"
+  },
+  {
+    "package": "libhyphen0",
+    "version": "2.8.8-7build3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/h/hyphen/libhyphen0_2.8.8-7build3_amd64.deb",
+    "sha256": "b508d3a5da168ddb2ae6e79ea0521ba64cd121285db0ece438d0bd56ba628556"
+  },
+  {
+    "package": "liborc-0.4-0t64",
+    "version": "1:0.4.38-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/o/orc/liborc-0.4-0t64_0.4.38-1build1_amd64.deb",
+    "sha256": "facde0deeeae78041d4b5ad9cea5d076ce6264a26d1ef927c6befe2d9eb3d6fb"
+  },
+  {
+    "package": "libgudev-1.0-0",
+    "version": "1:238-5ubuntu1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libg/libgudev/libgudev-1.0-0_238-5ubuntu1_amd64.deb",
+    "sha256": "8bdd42c584a8d18759df2311b126dc679d438e9780038743b792cf5315f248dc"
+  },
+  {
+    "package": "libevdev2",
+    "version": "1.13.1+dfsg-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/libe/libevdev/libevdev2_1.13.1+dfsg-1build1_amd64.deb",
+    "sha256": "a14b1ea7b3220a063458590734920879cec8431b4fc5160eb0f044dfb8d76515"
+  },
+  {
+    "package": "libgraphene-1.0-0",
+    "version": "1.10.8-3build2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/g/graphene/libgraphene-1.0-0_1.10.8-3build2_amd64.deb",
+    "sha256": "5276c4173bff30bd2a368cce30639227089512aad85fc4af87c284456bafe8ff"
+  },
+  {
+    "package": "libhunspell-1.7-0",
+    "version": "1.7.2+really1.7.2-10build3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/h/hunspell/libhunspell-1.7-0_1.7.2+really1.7.2-10build3_amd64.deb",
+    "sha256": "77849069ed487a16c1dcf71122cc9578f6610542e52a85fc259aa0932a13da22"
+  },
+  {
+    "package": "libaspell15",
+    "version": "0.60.8.1-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/a/aspell/libaspell15_0.60.8.1-1build1_amd64.deb",
+    "sha256": "3461b6c567898d90d2b66cb2910b24cfd46e8c27d1fbcb81a1af1f44a3c99a8f"
+  },
+  {
+    "package": "libicu74",
+    "version": "74.2-1ubuntu3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/i/icu/libicu74_74.2-1ubuntu3_amd64.deb",
+    "sha256": "d29c97a21a3e3254731cfac186e4d4e611e5e67d2c9a0430f6acfbd9acaefa2e"
+  },
+  {
+    "package": "libdav1d7",
+    "version": "1.4.1-1build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/d/dav1d/libdav1d7_1.4.1-1build1_amd64.deb",
+    "sha256": "7246303bd3ed4b99a2fb98e6199950ceb2520e7572265aefa0a6e44352adb3f0"
+  },
+  {
+    "package": "libgav1-1",
+    "version": "0.18.0-1build3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/libg/libgav1/libgav1-1_0.18.0-1build3_amd64.deb",
+    "sha256": "428f353f449e6b15cdcf5823215416e36adcfba75fe9f0fedc1cd132d68e6b3f"
+  },
+  {
+    "package": "librav1e0",
+    "version": "0.7.1-2",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/r/rust-rav1e/librav1e0_0.7.1-2_amd64.deb",
+    "sha256": "be10d7e2dc028d9d7791997a8710b7a9a3147151613750f0f08963fbe9ac993c"
+  },
+  {
+    "package": "libsvtav1enc1d1",
+    "version": "1.7.0+dfsg-2build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/s/svt-av1/libsvtav1enc1d1_1.7.0+dfsg-2build1_amd64.deb",
+    "sha256": "bac5f768bff928e85cecb39da8e37276a579639ef884692b089ed2de6c1cd2ad"
+  },
+  {
+    "package": "libyuv0",
+    "version": "0.0~git202401110.af6ac82-1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/universe/liby/libyuv/libyuv0_0.0~git202401110.af6ac82-1_amd64.deb",
+    "sha256": "88bd472e50a7e45469e31f8e0ba232b4d8ed30322f5badb285c58cc1ba0d2176"
+  },
+  {
+    "package": "libaom3",
+    "version": "3.8.2-2build1",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/a/aom/libaom3_3.8.2-2build1_amd64.deb",
+    "sha256": "e6a54b5668d0f03e03c6a3b5d0e2408527d0a046b2f028bd4b7b2608d4f86713"
+  },
+  {
+    "package": "libabsl20220623t64",
+    "version": "20220623.1-3.1ubuntu3",
+    "source": "https://archive.ubuntu.com/ubuntu/pool/main/a/abseil/libabsl20220623t64_20220623.1-3.1ubuntu3_amd64.deb",
+    "sha256": "eafc5f26ba910468a6d5d5f154ed8fcf4beed2d5bc45619907ea9f517cdaf401"
+  }
+]

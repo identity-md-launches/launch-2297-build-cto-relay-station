@@ -29,7 +29,7 @@ Status always includes words, not color alone. The modal backdrop is `rgb(20 28 
 
 The shared scale is 13px (`--text-sm`, secondary facts/metadata/code), 15px (`--text-base`, body and buttons), 17px (`--text-md`, subheadings/row titles/brand), 20px (`--text-lg`, section headings) and 26px (`--text-xl`, page heading). Controls use 16px at widths up to 640px to avoid iOS input zoom. Body line-height is 1.55, headings 1.2. CSS uses 400/600; native strong text may use 700. There is no tracked-capital heading treatment.
 
-Descriptions cap at 65ch and goals at 70ch. IDs, requirements, long titles/goals and verification output wrap without clipping. Code is reserved for identifiers. Markdown code wraps with `white-space: pre-wrap`; its tables use a fixed width layout. `lang="zh-CN"` is set in the document. User HTML is a separate opaque-origin preview, not part of the product typography system.
+Descriptions cap at 65ch and goals at 70ch. IDs, requirements, long titles/goals and verification output wrap without clipping. Code is reserved for identifiers. Markdown code wraps with `white-space: pre-wrap`; table cells keep a readable 4em minimum with 4px/8px padding inside a labelled, keyboard-focusable horizontal scroller. `.preview` uses one `minmax(0, 1fr)` grid column so the table scrolls inside its panel while descriptors and downloads remain contained. `lang="zh-CN"` is set in the document. User HTML is a separate opaque-origin preview, not part of the product typography system.
 
 ## Layout
 

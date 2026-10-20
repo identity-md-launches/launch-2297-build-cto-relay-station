@@ -4,7 +4,7 @@
    "name": "render",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 8672,
+   "durationMs": 8287,
    "output": "renders, no script errors or missing local files"
   },
   {
@@ -25,7 +25,7 @@
    "name": "contrast",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 0,
+   "durationMs": 1,
    "output": "all measured text meets 4.5:1 (3:1 large)"
   },
   {
@@ -54,7 +54,7 @@
    "passed": true,
    "exitCode": 0,
    "durationMs": 0,
-   "output": "390: 2 sizes in use, 5 with one-offs (13px×8, 15px×16, 17px×1, 20px×1, 26px×1)\n1440: 2 sizes in use, 5 with one-offs (13px×8, 15px×16, 17px×1, 20px×1, 26px×1)\nbar: 6 sizes used more than once, 8 counting one-offs, per width"
+   "output": "390: 2 sizes in use, 5 with one-offs (13px×8, 15px×17, 17px×1, 20px×1, 26px×1)\n1440: 2 sizes in use, 5 with one-offs (13px×8, 15px×17, 17px×1, 20px×1, 26px×1)\nbar: 6 sizes used more than once, 8 counting one-offs, per width"
   },
   {
    "name": "type-faces",
@@ -67,7 +67,7 @@
    "name": "glyphs",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "no em dashes or emoji in text"
   },
   {
@@ -81,7 +81,7 @@
    "name": "repetition",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 2,
    "output": "no repeated lines"
   },
   {
@@ -89,7 +89,7 @@
    "passed": true,
    "exitCode": 0,
    "durationMs": 0,
-   "output": "prose on the first screen: 15 words at 390 (bar 60), 15 at 1440 (bar 90)\nall words on the first screen: 68 at 390, 73 at 1440\nwhole page: 73 words, 15 of them prose"
+   "output": "prose on the first screen: 14 words at 390 (bar 60), 14 at 1440 (bar 90)\nall words on the first screen: 64 at 390, 66 at 1440\nwhole page: 66 words, 14 of them prose"
   },
   {
    "name": "chrome",
@@ -109,7 +109,7 @@
    "name": "share",
    "passed": true,
    "exitCode": 0,
-   "durationMs": 1,
+   "durationMs": 0,
    "output": "title \"CTO 中继站 · 公开项目工作区\", favicon, og:title, og:image, description"
   }
  ]

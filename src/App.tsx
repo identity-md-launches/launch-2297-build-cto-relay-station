@@ -73,7 +73,7 @@ function LiveApp() {
           <button className="btn btn-primary" disabled aria-describedby="live-why">创建项目</button>
           <a className="btn btn-secondary" href="#/demo">打开演示模式</a>
         </div>
-        <p id="live-why" className="hint">创建、提案、资助与分叉要等 A1 交付 SDK 与已验证的配置后才能使用。演示模式只用本地样例，不会发送真实交易。</p>
+        <p id="live-why" className="hint">创建、提案、资助与分叉需完成 A1 浏览器集成并验证部署配置。演示模式只用本地样例，不会发送真实交易。</p>
         <div className="alert alert-pending" role="status">
           <p><strong>A1 集成待定</strong>，状态码 <code>A1_INTEGRATION_PENDING</code></p>
           <p>{st.summary}</p>
@@ -86,7 +86,7 @@ function LiveApp() {
         <dl className="facts">
           <div><dt>账户</dt><dd>{isConnected && address ? <CopyId value={address} label="账户地址" /> : "未连接（浏览公开内容不需要连接）"}</dd></div>
           <div><dt>网络</dt><dd>{isConnected ? (chainId === WALLET_CHAIN.id ? WALLET_CHAIN.name : `链 ${chainId}，需要 ${WALLET_CHAIN.name}`) : "未连接"}</dd></div>
-          <div><dt>A1 来源</dt><dd>作业 <CopyId value={st.a1.jobId} label="A1 作业" />，{st.a1.checkedAt} 查看时状态为 {st.a1.observedState}，尚无公开交付</dd></div>
+          <div><dt>A1 来源</dt><dd>作业 <CopyId value={st.a1.jobId} label="A1 作业" />，{st.a1.checkedAt} 查看时状态为 {st.a1.observedState}，{st.a1.delivery ? <a href={st.a1.delivery} target="_blank" rel="noopener noreferrer">查看已固定提交的源码交付</a> : "尚无公开交付"}</dd></div>
           <div><dt>A1 提交体 SHA-256</dt><dd><CopyId value={st.a1.submittedBodySha256} label="A1 提交体哈希" /></dd></div>
         </dl>
       </section>

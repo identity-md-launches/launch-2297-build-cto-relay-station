@@ -1,0 +1,88 @@
+{
+  "observedAt": "2026-10-20T15:47:08.735Z",
+  "repo": "https://github.com/identity-md-launches/launch-2294-build-cto-relay-station",
+  "commit": "9b0294e7ab19060bd00c489fbe032cf248528e0d",
+  "archive": "https://api.github.com/repos/identity-md-launches/launch-2294-build-cto-relay-station/tarball/9b0294e7ab19060bd00c489fbe032cf248528e0d",
+  "archiveSha256": "ddc9f63a0f18e9013c01e670269d466f313dc4c313164a2ad646b8b132f09b80",
+  "pins": [
+    {
+      "path": "sdk/files.mjs",
+      "bytes": 9649,
+      "sha256": "26d5da8fbfb8c6a289a218188e9f38da2a3d3e59a299c1ca7b61cf934c8625a2"
+    },
+    {
+      "path": "sdk/index.mjs",
+      "bytes": 18445,
+      "sha256": "821bdddcc7d84a7da5f3a3f916872e9dded03aa06a8d98537e13186eadfa4898"
+    },
+    {
+      "path": "sdk/strict-json.mjs",
+      "bytes": 3773,
+      "sha256": "21945f3b09289a72dfc29ae1334872466853ecf583bc71175c78c090ed68028e"
+    },
+    {
+      "path": "abi/IIntake.json",
+      "bytes": 1607,
+      "sha256": "5b229bcd1a0e3cbcaf2f5a692b1b9bc899fa89ac67724ea4009580c5a694e5d6"
+    },
+    {
+      "path": "abi/RelayBranch.json",
+      "bytes": 30697,
+      "sha256": "0af0418a66347339164aa4abe872ab4f14090f1a1a2a5f8eeb77c21b79b15f80"
+    },
+    {
+      "path": "abi/RelayEncoder.json",
+      "bytes": 7927,
+      "sha256": "7f7cc7133fb159f4ae248c9c903855ea506cf154e8e6017680075e3c50d9153a"
+    },
+    {
+      "path": "abi/RelayFactory.json",
+      "bytes": 5852,
+      "sha256": "5262e223a80ee89b432c95e18c8a73aec1f907e18449bcc2d16e834ef32d7dc6"
+    },
+    {
+      "path": "abi/RelayVerifier.json",
+      "bytes": 5356,
+      "sha256": "943d11cab4f5fc08d887485037642d6d02c1974bb909cbc4037dd6c5230bfc6d"
+    },
+    {
+      "path": "config/release.json",
+      "bytes": 2704,
+      "sha256": "cb03110afd4244ecec77985ba5cd650685b35f2cf5abbb3df18a960b7be507bc"
+    },
+    {
+      "path": "tools/local-integration.mjs",
+      "bytes": 14576,
+      "sha256": "72961b2e079b9c2453bf4fe4df1db97a77ba35efa09cbef70b609659db09ab46"
+    },
+    {
+      "path": "README.md",
+      "bytes": 14783,
+      "sha256": "8824295521aecb13dd72857e9df68b399406e31015bea3632c1db89dcd25a104"
+    },
+    {
+      "path": "docs/HANDOFF.md",
+      "bytes": 10922,
+      "sha256": "e1e0a0b1d4d1f3101367fea9b6050ad19f84a02b9f7b7ab235a76ca4af94f867"
+    },
+    {
+      "path": "package.json",
+      "bytes": 655,
+      "sha256": "024ce71452c7268933cc16fc006b932276d66fcb176f297698036a9be7164266"
+    },
+    {
+      "path": "foundry.toml",
+      "bytes": 242,
+      "sha256": "71ab1a7e266f441b07746c2138ca1e0330f382144bb3402388062911b3614629"
+    }
+  ],
+  "importedIntoProduct": [],
+  "browserCompatibility": "Node-only: sdk/index.mjs imports node:crypto and node:fs; no verified W1 browser bridge",
+  "release": {
+    "productionDeployment": null,
+    "productionReady": false,
+    "liveCompatibility": "NOT_RUN",
+    "policyId": "0x52152ca7fa11d1153bd1cce4f2f5b5716c5d21845e04f76ca1d39e07fe42c44e",
+    "publishing": false
+  }
+}
