@@ -40,7 +40,7 @@ export function Workspace({ adapter, branchId, account }: Props) {
 
   // Reconcile any locally remembered transaction by its original hash and nonce. Never re-purchase.
   useEffect(() => {
-    const recs = loadRecovery().filter((r) => r.branchId === branchId);
+    const recs = loadRecovery().filter((r) => r.branchId === branchId && r.adapterKind === adapter.kind && r.chainId === account.chainId && r.account.toLowerCase() === account.address.toLowerCase());
     if (!recs.length) return;
     let live = true;
     Promise.all(recs.map((r) => adapter.reconcile(r).then((sp) => ({ r, sp })))).then((res) => {
@@ -55,7 +55,7 @@ export function Workspace({ adapter, branchId, account }: Props) {
     }, (e: Error) => live && setRecovery(`对账失败：${e.message}。本地记录仍保留，不会自动重新购买。`));
     return () => { live = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adapter, branchId]);
+  }, [adapter, branchId, who]);
 
   if (branch.isPending || history.isPending || caps.isPending) return <p className="state-line">正在读取分支…</p>;
   if (branch.isError) return <p className="alert alert-error" role="alert">读取分支失败：{(branch.error as Error).message} <a href="#/demo">返回项目列表</a></p>;
@@ -69,6 +69,8 @@ export function Workspace({ adapter, branchId, account }: Props) {
   const view = cps.find((c) => c.id === chosen) ?? latest;
   const wrongNet = account.chainId !== FIXTURE_CHAIN_ID;
   const fixture = adapter instanceof FixtureAdapter ? adapter : null;
+  const isLatestAttempt = (sp: Sponsorship) => !sponsorships.data?.some((other) => other.proposalId === sp.proposalId && other.attempt > sp.attempt);
+  const outstanding = sponsorships.data?.some((sp) => isLatestAttempt(sp) && (sp.stages.purchase === "unknown" || sp.stages.purchase === "pending" || sp.stages.callback === "pending" || sp.stages.callback === "refused" || sp.stages.binding === "failed"));
 
   return (
     <div className="ws">
@@ -77,6 +79,12 @@ export function Workspace({ adapter, branchId, account }: Props) {
         <h1 id="ws-title">{b.projectTitle}</h1>
         <p className="goal"><span className="label">目标</span>{b.goal}</p>
         {b.direction && <p className="goal"><span className="label">分叉方向</span>{b.direction}</p>}
+        <nav className="jump" aria-label="工作区分区">
+          <a href="#assets" onClick={jump("assets")}>资产</a>
+          <a href="#proposals" onClick={jump("proposals")}>提案</a>
+          <a href="#progress" onClick={jump("progress")}>资助进度</a>
+          <a href="#history" onClick={jump("history")}>历史与分叉</a>
+        </nav>
         <dl className="facts facts-grid">
           <div><dt>当前账户</dt><dd>{account.label} <CopyId value={account.address} label="当前账户" /></dd></div>
           <div><dt>网络</dt><dd>{wrongNet ? <span className="warn-text">链 {account.chainId}，与演示链 {FIXTURE_CHAIN_ID} 不一致，操作已禁用</span> : `本地演示链 ${FIXTURE_CHAIN_ID}`}</dd></div>
@@ -92,12 +100,6 @@ export function Workspace({ adapter, branchId, account }: Props) {
           </select>
         </label>
         {b.frozen && <p className="alert alert-error" role="alert">该分支的购买已冻结（状态 2 或未知失败）。不会自动解锁、退款或修复。</p>}
-        <nav className="jump" aria-label="工作区分区">
-          <a href="#assets" onClick={jump("assets")}>资产</a>
-          <a href="#proposals" onClick={jump("proposals")}>提案</a>
-          <a href="#progress" onClick={jump("progress")}>资助进度</a>
-          <a href="#history" onClick={jump("history")}>历史与分叉</a>
-        </nav>
       </section>
 
       {notice && <p className="alert alert-warn" role="status">{notice} <button className="btn btn-link" onClick={() => setNotice(null)}>知道了</button></p>}
@@ -112,7 +114,9 @@ export function Workspace({ adapter, branchId, account }: Props) {
         <section id="proposals" className="panel" aria-labelledby="prop-title" tabIndex={-1}>
           <h2 id="prop-title">提案</h2>
           <p className="hint">任何当前提案都可以被资助，没有先来先选或只选最新。资助者不能修改提案内容。</p>
+          {outstanding && <p className="alert alert-warn" role="status">分支有尚未完成的请求。等待原交易、回调或修正绑定；不会重新购买。</p>}
           {proposals.isPending && <p className="state-line">正在读取提案…</p>}
+          {proposals.isError && <p className="alert alert-error" role="alert">提案读取失败。<button className="btn btn-link" onClick={() => proposals.refetch()}>重试</button></p>}
           {proposals.data && proposals.data.length === 0 && <p className="empty">还没有提案。用下面的表单提出第一项工作。</p>}
           <ul className="list">
             {proposals.data?.slice().sort((x, y) => order(x) - order(y)).map((p) => (
@@ -120,7 +124,7 @@ export function Workspace({ adapter, branchId, account }: Props) {
                 <ProposalSummary p={p} cps={cps} />
                 {p.status === "current" && (
                   <div className="actions">
-                    <button className="btn btn-primary" disabled={b.frozen || wrongNet} aria-expanded={sponsorFor === p.id} onClick={() => setSponsorFor(sponsorFor === p.id ? null : p.id)}>
+                    <button className="btn btn-primary" disabled={b.frozen || wrongNet || outstanding} aria-expanded={sponsorFor === p.id} onClick={() => setSponsorFor(sponsorFor === p.id ? null : p.id)}>
                       {sponsorFor === p.id ? "收起资助" : "资助此提案"}
                     </button>
                   </div>
@@ -139,7 +143,7 @@ export function Workspace({ adapter, branchId, account }: Props) {
             ))}
           </ul>
           <div id="propose">
-            <ProposeForm key={`${latest.id}:${resubmit?.id ?? ""}`} adapter={adapter} account={account} branch={b} latest={latest} caps={caps.data} prefill={resubmit}
+            <ProposeForm key={`${who}:${latest.id}:${resubmit?.id ?? ""}`} adapter={adapter} account={account} branch={b} latest={latest} caps={caps.data} prefill={resubmit}
               onDone={() => { setResubmit(null); refresh(); }} />
           </div>
         </section>
@@ -147,10 +151,12 @@ export function Workspace({ adapter, branchId, account }: Props) {
         <section id="progress" className="panel" aria-labelledby="progress-title" tabIndex={-1}>
           <h2 id="progress-title">资助进度</h2>
           {fixture && <DemoOutcome fixture={fixture} />}
+          {sponsorships.isPending && <p className="state-line">正在读取资助进度…</p>}
+          {sponsorships.isError && <p className="alert alert-error" role="alert">资助进度读取失败。<button className="btn btn-link" onClick={() => sponsorships.refetch()}>重试</button></p>}
           {sponsorships.data && sponsorships.data.length === 0 && <p className="empty">这个分支还没有资助。资助一个当前提案后，各阶段会分别显示在这里。</p>}
           <ul className="list">
             {sponsorships.data?.slice().reverse().map((sp) => (
-              <SponsorshipRow key={sp.id} sp={sp} adapter={adapter} account={account} fixture={fixture} wrongNet={wrongNet} onChange={refresh} />
+              <SponsorshipRow key={`${who}:${sp.id}`} sp={sp} canRetry={isLatestAttempt(sp)} adapter={adapter} account={account} fixture={fixture} wrongNet={wrongNet} onChange={refresh} />
             ))}
           </ul>
         </section>
@@ -235,7 +241,7 @@ function CheckpointSummary({ c, latestId }: { c: Checkpoint; latestId: string })
     <div className="row-main">
       <p className="row-title">第 {c.revision} 轮 · {kind} {c.id === latestId && <span className="tag tag-accent">当前</span>}</p>
       <p className="meta">
-        变更：{c.changed.length ? c.changed.join("、") : "无"} · 资助者：{c.funder ? short(c.funder) : "无"} · 作业：{c.jobId ?? "无"} · {formatTime(c.at)}
+        变更：{c.changed.length ? c.changed.join("、") : "无"} · 资助者：{c.funder ? <CopyId value={c.funder} label="历史资助者" /> : "无"} · 作业：{c.jobId ?? "无"} · {formatTime(c.at)}
       </p>
       <p className="meta">资产：{c.assets.length ? c.assets.map((a) => `${a.assetKey}@第 ${a.revision} 轮（${a.originCheckpoint}）`).join("、") : "无"}</p>
       {c.manifestKeccak && <p className="meta">清单 keccak256（不是文件 SHA-256）：<CopyId value={c.manifestKeccak} label="清单 keccak256" /></p>}
@@ -257,6 +263,7 @@ function SafeLink({ href, children }: { href: string; children: React.ReactNode 
 
 function DemoOutcome({ fixture }: { fixture: FixtureAdapter }) {
   const [, force] = useState(0);
+  useEffect(() => fixture.subscribeControls(() => force((n) => n + 1)), [fixture]);
   const c = fixture.controls;
   const set = (patch: Partial<typeof c>) => { Object.assign(fixture.controls, patch); force((n) => n + 1); };
   return (
@@ -287,14 +294,16 @@ function DemoOutcome({ fixture }: { fixture: FixtureAdapter }) {
   );
 }
 
-function SponsorshipRow({ sp, adapter, account, fixture, wrongNet, onChange }: { sp: Sponsorship; adapter: RelayAdapter; account: Account; fixture: FixtureAdapter | null; wrongNet: boolean; onChange: () => void }) {
+function SponsorshipRow({ sp, canRetry, adapter, account, fixture, wrongNet, onChange }: { sp: Sponsorship; canRetry: boolean; adapter: RelayAdapter; account: Account; fixture: FixtureAdapter | null; wrongNet: boolean; onChange: () => void }) {
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  const lock = useRef(false);
   const run = async (f: () => Promise<unknown>) => {
-    if (busy) return;
+    if (lock.current) return;
+    lock.current = true;
     setBusy(true);
     setErr(null);
-    try { await f(); onChange(); } catch (e) { setErr((e as Error).message); } finally { setBusy(false); }
+    try { await f(); onChange(); } catch (e) { setErr((e as Error).message); } finally { lock.current = false; setBusy(false); }
   };
   return (
     <li className="row row-col" data-testid={`sp-${sp.id}`}>
@@ -309,7 +318,7 @@ function SponsorshipRow({ sp, adapter, account, fixture, wrongNet, onChange }: {
         {sp.note && <p className="hint">{sp.note}</p>}
       </div>
       <div className="actions">
-        {sp.stages.callback === "refused" && (
+        {sp.stages.callback === "refused" && canRetry && (
           <button className="btn btn-primary" disabled={busy || wrongNet} onClick={() => run(() => adapter.retryRefused(account, sp.id, sp.maxFee))}>用相同请求体重试（需再次支付）</button>
         )}
         {sp.stages.binding === "failed" && (

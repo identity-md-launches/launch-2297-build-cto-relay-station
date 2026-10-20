@@ -19,7 +19,7 @@ export function ProjectList({ adapter, account }: { adapter: RelayAdapter; accou
           </button>
         </div>
         <p className="lede">每个项目从一个根分支开始，目标创建后不能修改。创建只花 gas，不会购买 AI。</p>
-        {creating && <CreateBranchForm adapter={adapter} account={account} onDone={() => setCreating(false)} />}
+        {creating && <CreateBranchForm key={`${account.address}:${account.chainId}`} adapter={adapter} account={account} onDone={() => setCreating(false)} />}
         {q.isPending && <p className="state-line">正在读取项目…</p>}
         {q.isError && <p className="alert alert-error" role="alert">读取失败：{(q.error as Error).message} <button className="btn btn-link" onClick={() => q.refetch()}>重试</button></p>}
         {q.data && q.data.length === 0 && <p className="empty">还没有项目。创建第一个项目，写下它的固定目标。</p>}

@@ -1,0 +1,20 @@
+
+> cto-relay-station-w1@0.1.0 test:unit
+> vitest run --reporter=default --reporter=json --outputFile=docs/validation/raw/vitest.json
+
+
+ RUN  v5.0.5 /home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5
+
+ ✓ tests/unit/domain.test.ts (10 tests) 146ms
+ ✓ tests/unit/security.test.tsx (17 tests) 1186ms
+   ✓ untrusted previews and resource bounds (6)
+     ✓ round-trips full allowed-size bytes without overflowing the JavaScript argument stack 469ms
+
+ Test Files  2 passed (2)
+      Tests  27 passed (27)
+   Start at  14:41:03
+   Duration  2.93s (environment 39%, tests 29%, import 26%, setup 4%, transform 2%)
+
+JSON report written to /home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/docs/validation/raw/vitest.json
+
+exit_code=0

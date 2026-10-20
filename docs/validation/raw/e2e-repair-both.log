@@ -1,0 +1,420 @@
+[WebServer] (node:24) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:37) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 32 tests using 2 workers
+
+(node:58) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium-desktop] › tests/e2e/w1.spec.ts:12:1 › live mode fails closed with explicit A1_INTEGRATION_PENDING, no fixtures, no connect wall (446ms)
+  ✓   3 [chromium-desktop] › tests/e2e/w1.spec.ts:22:1 › first screen at phone width shows the product and its main action (581ms)
+  ✓   4 [chromium-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature (1.1s)
+  ✓   5 [chromium-desktop] › tests/e2e/w1.spec.ts:49:1 › propose, sponsor with exact allowance (account B), callback, binding, retained assets (2.6s)
+  ✓   6 [chromium-desktop] › tests/e2e/w1.spec.ts:92:1 › stale proposal resubmission, sign rejection, account and network change (1.0s)
+  ✓   2 [chromium-desktop] › tests/e2e/journey.spec.ts:39:1 › two accounts execute all six functions with downloaded HTML-image-HTML retention and a historical fork (11.0s)
+  ✓   8 [chromium-desktop] › tests/e2e/journey.spec.ts:144:1 › account and network changes invalidate proposal and create confirmations (804ms)
+  ✓   7 [chromium-desktop] › tests/e2e/w1.spec.ts:119:1 › missing callback stays pending; refused retry; bad binding resubmits without repurchase; status 2 freezes (6.0s)
+  ✓   9 [chromium-desktop] › tests/e2e/journey.spec.ts:162:1 › preview navigation, forms, wallet messages and storage are inert; version changes do not reuse verified bytes (1.5s)
+  ✓  11 [chromium-desktop] › tests/e2e/wallet.spec.ts:42:1 › EIP-6963 named browser wallet connects on desktop and phone, switches chain and observes account changes (499ms)
+  ✓  10 [chromium-desktop] › tests/e2e/w1.spec.ts:166:1 › unknown purchase reconciles by original hash/nonce after reload, never repurchases (2.1s)
+  ✓  12 [chromium-desktop] › tests/e2e/wallet.spec.ts:66:1 › wallet rejection leaves reads available; dialog wraps focus and restores it (463ms)
+(node:308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [chromium-desktop] › tests/e2e/w1.spec.ts:179:1 › fork an accepted historical checkpoint copies that asset set only (1.3s)
+  ✓  15 [chromium-desktop] › tests/e2e/w1.spec.ts:199:1 › workspace layout at this project's width has no horizontal scroll (1.1s)
+  ✓  16 [chromium-desktop] › tests/e2e/w1.spec.ts:210:1 › malicious files stay isolated and broken files never get a verified badge (2.2s)
+  ✓  17 [chromium-desktop] › tests/e2e/w1.spec.ts:244:1 › keyboard: skip link, focus ring, connect sheet traps and restores focus (591ms)
+(node:417) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  18 [webkit-desktop] › tests/e2e/w1.spec.ts:12:1 › live mode fails closed with explicit A1_INTEGRATION_PENDING, no fixtures, no connect wall (866ms)
+  ✓  19 [webkit-desktop] › tests/e2e/w1.spec.ts:22:1 › first screen at phone width shows the product and its main action (1.6s)
+  ✘  20 [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature (3.7s)
+(node:605) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  21 [webkit-desktop] › tests/e2e/w1.spec.ts:49:1 › propose, sponsor with exact allowance (account B), callback, binding, retained assets (9.3s)
+(node:690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  22 [webkit-desktop] › tests/e2e/w1.spec.ts:92:1 › stale proposal resubmission, sign rejection, account and network change (6.4s)
+(node:773) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  14 [webkit-desktop] › tests/e2e/journey.spec.ts:39:1 › two accounts execute all six functions with downloaded HTML-image-HTML retention and a historical fork (37.7s)
+(node:857) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  24 [webkit-desktop] › tests/e2e/journey.spec.ts:144:1 › account and network changes invalidate proposal and create confirmations (4.2s)
+(node:939) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  23 [webkit-desktop] › tests/e2e/w1.spec.ts:119:1 › missing callback stays pending; refused retry; bad binding resubmits without repurchase; status 2 freezes (17.0s)
+(node:1024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  25 [webkit-desktop] › tests/e2e/journey.spec.ts:162:1 › preview navigation, forms, wallet messages and storage are inert; version changes do not reuse verified bytes (4.6s)
+(node:1092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  27 [webkit-desktop] › tests/e2e/wallet.spec.ts:42:1 › EIP-6963 named browser wallet connects on desktop and phone, switches chain and observes account changes (2.4s)
+  ✘  26 [webkit-desktop] › tests/e2e/w1.spec.ts:166:1 › unknown purchase reconciles by original hash/nonce after reload, never repurchases (4.2s)
+(node:1239) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  28 [webkit-desktop] › tests/e2e/wallet.spec.ts:66:1 › wallet rejection leaves reads available; dialog wraps focus and restores it (1.8s)
+  ✘  29 [webkit-desktop] › tests/e2e/w1.spec.ts:179:1 › fork an accepted historical checkpoint copies that asset set only (4.7s)
+(node:1330) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  30 [webkit-desktop] › tests/e2e/w1.spec.ts:199:1 › workspace layout at this project's width has no horizontal scroll (2.8s)
+(node:1413) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  31 [webkit-desktop] › tests/e2e/w1.spec.ts:210:1 › malicious files stay isolated and broken files never get a verified badge (5.1s)
+(node:1495) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  32 [webkit-desktop] › tests/e2e/w1.spec.ts:244:1 › keyboard: skip link, focus ring, connect sheet traps and restores focus (1.1s)
+
+
+  1) [webkit-desktop] › tests/e2e/journey.spec.ts:39:1 › two accounts execute all six functions with downloaded HTML-image-HTML retention and a historical fork 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/journey-two-accounts-execu-4c59e-ntion-and-a-historical-fork-webkit-desktop/error-context.md
+
+  2) [webkit-desktop] › tests/e2e/journey.spec.ts:144:1 › account and network changes invalidate proposal and create confirmations 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/journey-account-and-networ-62040-al-and-create-confirmations-webkit-desktop/error-context.md
+
+  3) [webkit-desktop] › tests/e2e/journey.spec.ts:162:1 › preview navigation, forms, wallet messages and storage are inert; version changes do not reuse verified bytes 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 30
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    +   Object {
+    +     "text": "Blocked script execution in 'about:srcdoc' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/journey-preview-navigation-95465-do-not-reuse-verified-bytes-webkit-desktop/error-context.md
+
+  4) [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/w1-create-root-branch-with-2a994-e-click-sends-one-signature-webkit-desktop/error-context.md
+
+  5) [webkit-desktop] › tests/e2e/w1.spec.ts:49:1 › propose, sponsor with exact allowance (account B), callback, binding, retained assets 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/w1-propose-sponsor-with-ex-52535-ack-binding-retained-assets-webkit-desktop/error-context.md
+
+  6) [webkit-desktop] › tests/e2e/w1.spec.ts:92:1 › stale proposal resubmission, sign rejection, account and network change 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/w1-stale-proposal-resubmis-89bcd--account-and-network-change-webkit-desktop/error-context.md
+
+  7) [webkit-desktop] › tests/e2e/w1.spec.ts:119:1 › missing callback stays pending; refused retry; bad binding resubmits without repurchase; status 2 freezes 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/w1-missing-callback-stays--b78bd-repurchase-status-2-freezes-webkit-desktop/error-context.md
+
+  8) [webkit-desktop] › tests/e2e/w1.spec.ts:166:1 › unknown purchase reconciles by original hash/nonce after reload, never repurchases 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/w1-unknown-purchase-reconc-2b142-er-reload-never-repurchases-webkit-desktop/error-context.md
+
+  9) [webkit-desktop] › tests/e2e/w1.spec.ts:179:1 › fork an accepted historical checkpoint copies that asset set only 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/w1-fork-an-accepted-histor-a9ddc--copies-that-asset-set-only-webkit-desktop/error-context.md
+
+  10) [webkit-desktop] › tests/e2e/w1.spec.ts:199:1 › workspace layout at this project's width has no horizontal scroll 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/w1-workspace-layout-at-thi-70427-th-has-no-horizontal-scroll-webkit-desktop/error-context.md
+
+  11) [webkit-desktop] › tests/e2e/w1.spec.ts:210:1 › malicious files stay isolated and broken files never get a verified badge 
+
+    Error: uncaught page errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "/127.0.0.1:4173/ due to access control checks.",
+    + ]
+
+       at harness.ts:21
+
+      19 |     const consoleErrors = consoleLog.filter((m) => m.type === "error");
+      20 |     await writeFile(`docs/validation/browser/${id}.json`, JSON.stringify({ test: info.title, engine: info.project.name, viewport: page.viewportSize(), status: errors.length || external.length || resources.length || consoleErrors.length ? "failed" : info.status, pageErrors: errors, externalAttempts: external, httpErrors: resources, console: consoleLog }, null, 2));
+    > 21 |     expect(errors, "uncaught page errors").toEqual([]);
+         |                                            ^
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+      24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:21:44)
+
+    Error Context: test/scratch/browser-artifacts/w1-malicious-files-stay-is-a5603--never-get-a-verified-badge-webkit-desktop/error-context.md
+
+  11 failed
+    [webkit-desktop] › tests/e2e/journey.spec.ts:39:1 › two accounts execute all six functions with downloaded HTML-image-HTML retention and a historical fork 
+    [webkit-desktop] › tests/e2e/journey.spec.ts:144:1 › account and network changes invalidate proposal and create confirmations 
+    [webkit-desktop] › tests/e2e/journey.spec.ts:162:1 › preview navigation, forms, wallet messages and storage are inert; version changes do not reuse verified bytes 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:49:1 › propose, sponsor with exact allowance (account B), callback, binding, retained assets 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:92:1 › stale proposal resubmission, sign rejection, account and network change 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:119:1 › missing callback stays pending; refused retry; bad binding resubmits without repurchase; status 2 freezes 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:166:1 › unknown purchase reconciles by original hash/nonce after reload, never repurchases 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:179:1 › fork an accepted historical checkpoint copies that asset set only 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:199:1 › workspace layout at this project's width has no horizontal scroll 
+    [webkit-desktop] › tests/e2e/w1.spec.ts:210:1 › malicious files stay isolated and broken files never get a verified badge 
+  21 passed (1.5m)

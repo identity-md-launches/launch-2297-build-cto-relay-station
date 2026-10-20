@@ -1,14 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-
-// Runs against the production export (dist/) with the fixture adapter. Real-wallet signing never happens.
-const errors: string[] = [];
-test.beforeEach(async ({ page }) => {
-  errors.length = 0;
-  page.on("pageerror", (e) => errors.push(e.message));
-  // Block anything leaving the local origin so a preview cannot reach the network unnoticed.
-  await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, (r) => { errors.push(`external request ${r.request().url()}`); return r.abort(); });
-});
-test.afterEach(() => expect(errors.filter((e) => !/eth\.merkle|cloudflare-eth|external request https:\/\/(eth|cloudflare)/.test(e))).toEqual([]));
+import { test, expect } from "./harness";
+import type { Page } from "@playwright/test";
 
 async function openDemo(page: Page, hash = "#/demo") {
   await page.goto(`./${hash}`);
@@ -17,7 +8,6 @@ async function openDemo(page: Page, hash = "#/demo") {
   await page.reload();
   await expect(page.getByText("演示模式").first()).toBeVisible();
 }
-const desktopOnly = () => test.skip(test.info().project.name !== "chromium-desktop", "full flow runs once on desktop Chromium");
 
 test("live mode fails closed with explicit A1_INTEGRATION_PENDING, no fixtures, no connect wall", async ({ page }) => {
   await page.goto("./");
@@ -36,11 +26,10 @@ test("first screen at phone width shows the product and its main action", async 
   await expect(page.getByRole("link", { name: "中继站示例项目", exact: true })).toBeVisible();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   expect(overflow).toBeLessThanOrEqual(0);
-  await page.screenshot({ path: `test-results/shots/${test.info().project.name}-demo-home.png` });
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-demo-home.png` });
 });
 
 test("create root branch with fixed goal (account A), double click sends one signature", async ({ page }) => {
-  desktopOnly();
   await openDemo(page);
   await page.getByRole("button", { name: "创建项目" }).click();
   await page.getByRole("button", { name: "预览创建" }).click();
@@ -58,7 +47,6 @@ test("create root branch with fixed goal (account A), double click sends one sig
 });
 
 test("propose, sponsor with exact allowance (account B), callback, binding, retained assets", async ({ page }) => {
-  desktopOnly();
   await openDemo(page, "#/demo/b/fx-branch-1");
   await page.getByLabel("演示签名账户").selectOption({ index: 1 });
   // History shows HTML R1 -> image R2 -> HTML R3 provenance.
@@ -102,7 +90,6 @@ test("propose, sponsor with exact allowance (account B), callback, binding, reta
 });
 
 test("stale proposal resubmission, sign rejection, account and network change", async ({ page }) => {
-  desktopOnly();
   await openDemo(page, "#/demo/b/fx-branch-1");
   const stale = page.locator("#proposals li", { hasText: "新建图片 · banner" });
   await expect(stale).toContainText("已过期");
@@ -116,6 +103,7 @@ test("stale proposal resubmission, sign rejection, account and network change", 
   await row.getByRole("button", { name: "资助此提案" }).click();
   await row.getByRole("button", { name: "1. 授权精确额度" }).click();
   await expect(row.getByText("用户在钱包中拒绝了签名")).toBeVisible();
+  await expect(page.getByLabel("下一次签名被拒绝")).not.toBeChecked();
   await expect(row.getByRole("button", { name: "1. 授权精确额度" })).toBeEnabled();
 
   // Switching account discards the prepared action.
@@ -130,7 +118,6 @@ test("stale proposal resubmission, sign rejection, account and network change", 
 });
 
 test("missing callback stays pending; refused retry; bad binding resubmits without repurchase; status 2 freezes", async ({ page }) => {
-  desktopOnly();
   await openDemo(page, "#/demo/b/fx-branch-1");
   const sponsor = async (title: string) => {
     const row = page.locator("#proposals li", { hasText: title });
@@ -178,7 +165,6 @@ test("missing callback stays pending; refused retry; bad binding resubmits witho
 });
 
 test("unknown purchase reconciles by original hash/nonce after reload, never repurchases", async ({ page }) => {
-  desktopOnly();
   await openDemo(page, "#/demo/b/fx-branch-1");
   await page.getByLabel("购买交易").selectOption("unknown");
   const row = page.locator("#proposals li", { hasText: "更新文档 · notes" });
@@ -192,7 +178,6 @@ test("unknown purchase reconciles by original hash/nonce after reload, never rep
 });
 
 test("fork an accepted historical checkpoint copies that asset set only", async ({ page }) => {
-  desktopOnly();
   await openDemo(page, "#/demo/b/fx-branch-1");
   const r2 = page.locator("#history li", { hasText: "第 2 轮 · 执行轮次" });
   await r2.getByRole("button", { name: "从此检查点分叉" }).click();
@@ -215,15 +200,17 @@ test("fork an accepted historical checkpoint copies that asset set only", async 
 test("workspace layout at this project's width has no horizontal scroll", async ({ page }) => {
   await openDemo(page, "#/demo/b/fx-branch-1");
   await expect(page.getByRole("heading", { name: "中继站示例项目" })).toBeVisible();
+  await page.evaluate(() => scrollTo(0, 0));
+  await expect(page.getByRole("link", { name: "提案", exact: true })).toBeInViewport({ ratio: 1 });
   await expect(page.getByText("演示模式").first()).toBeInViewport();
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-workspace-first.png` });
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   await page.locator("#assets li", { hasText: "site" }).getByRole("button", { name: "下载并校验" }).click();
   await expect(page.getByText("已校验：与 A1 描述一致")).toBeVisible();
-  await page.screenshot({ path: `test-results/shots/${test.info().project.name}-workspace.png`, fullPage: true });
-  await page.screenshot({ path: `test-results/shots/${test.info().project.name}-workspace-first.png` });
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-workspace.jpg`, type: "jpeg", quality: 55, fullPage: true });
 });
 
-test("malicious and broken files never execute and never get a verified badge", async ({ page }) => {
+test("malicious files stay isolated and broken files never get a verified badge", async ({ page }) => {
   await openDemo(page, "#/demo/b/fx-branch-sec");
   const open = (key: string) => page.locator("#assets li", { hasText: key }).first().getByRole("button", { name: "下载并校验" }).click();
 
@@ -254,7 +241,16 @@ test("malicious and broken files never execute and never get a verified badge", 
   await open("fake-png");
   await expect(page.locator("#assets li", { hasText: "fake-png" }).getByText(/格式：不通过，文件头不是 PNG、JPEG 或 WebP/)).toBeVisible();
   await expect(page.locator("#assets li", { hasText: "fake-png" }).locator("img")).toHaveCount(0);
-  await page.screenshot({ path: `test-results/shots/${test.info().project.name}-security.png`, fullPage: true });
+  await open("broken-png");
+  const broken = page.locator("#assets > ul > li", { hasText: /^broken-png / });
+  await expect(broken).toContainText("图片解码：不通过");
+  await expect(broken.getByText("已校验：与 A1 描述一致")).toHaveCount(0);
+  await expect(broken.locator("img, a[download]")).toHaveCount(0);
+  await open("oversized-png");
+  const oversized = page.locator("#assets > ul > li", { hasText: /^oversized-png / });
+  await expect(oversized).toContainText("图片资源上限：不通过");
+  await expect(oversized.locator("img, a[download]")).toHaveCount(0);
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-security.jpg`, type: "jpeg", quality: 55, fullPage: true });
 });
 
 test("keyboard: skip link, focus ring, connect sheet traps and restores focus", async ({ page }) => {
@@ -272,5 +268,5 @@ test("keyboard: skip link, focus ring, connect sheet traps and restores focus", 
   await page.keyboard.press("Escape");
   await expect(dialog).toHaveCount(0);
   await expect(connect).toBeFocused();
-  await page.screenshot({ path: `test-results/shots/${test.info().project.name}-live.png` });
+  await page.screenshot({ scale: "css", path: `docs/validation/screenshots/${test.info().project.name}-live.png` });
 });

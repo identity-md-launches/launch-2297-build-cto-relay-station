@@ -29,6 +29,7 @@ export const DOC_NOTES = `# 项目说明
 
 export const EVIL_HTML = `<!doctype html><html><head><meta charset="utf-8"><title>恶意页面</title>
 <meta http-equiv="refresh" content="0;url=https://example.invalid/phish">
+<style>@import "https://example.invalid/css";body{background-image:url("https://example.invalid/tracker-css")}</style>
 <script>
   try { parent.postMessage({ method: "eth_sendTransaction", params: [{ to: "0x0", value: "0x1" }] }, "*"); } catch (e) {}
   try { window.top.location = "https://example.invalid/top"; } catch (e) {}
@@ -55,6 +56,8 @@ export const EVIL_MD = `# 恶意 Markdown
 <iframe src="https://example.invalid"></iframe>
 
 [安全链接](https://example.org/docs)
+
+<a id="main" name="ethereum" tabindex="1" autofocus>不能覆盖宿主的标识或焦点</a>
 `;
 
 export const SVG_AS_PNG = `<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)"><script>alert(2)</script></svg>`;

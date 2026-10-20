@@ -18,6 +18,8 @@ export interface RecoveryRecord {
   branchId: string;
   proposalId: string;
   account: Hex;
+  chainId: number;
+  adapterKind: "fixture" | "live";
   txHash: Hex | null;
   nonce: number | null;
   savedAt: string;

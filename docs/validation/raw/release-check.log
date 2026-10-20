@@ -1,0 +1,11 @@
+{
+  "integration": "A1_INTEGRATION_PENDING",
+  "unitPassed": 27,
+  "browserPassed": 90,
+  "tastePassed": 16,
+  "bundle": {
+    "fileCount": 252,
+    "bytes": 6544109,
+    "limit": 8388608
+  }
+}

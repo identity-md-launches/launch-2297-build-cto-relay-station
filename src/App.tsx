@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAccount } from "wagmi";
+import { useQueryClient } from "@tanstack/react-query";
 import { ConnectSheet } from "./wallet/ConnectSheet";
 import { createLiveAdapter } from "./domain/liveAdapter";
 import { DEMO_ACCOUNTS, FIXTURE_CHAIN_ID, FixtureAdapter } from "./domain/fixtureAdapter";
@@ -94,10 +95,14 @@ function LiveApp() {
 
 /** Demo mode: the fixture adapter with two temporary demo accounts. The real wallet is never asked to sign. */
 function DemoApp({ branchId }: { branchId: string | null }) {
+  const qc = useQueryClient();
   const [adapter, setAdapter] = useState<FixtureAdapter | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [who, setWho] = useState(0);
   const [wrongNet, setWrongNet] = useState(false);
+  const [generation, setGeneration] = useState(0);
+  const [resetting, setResetting] = useState(false);
+  const resetLock = useRef(false);
   useEffect(() => {
     FixtureAdapter.create().then(setAdapter, (e: Error) => setError(e.message));
   }, []);
@@ -106,7 +111,7 @@ function DemoApp({ branchId }: { branchId: string | null }) {
   return (
     <>
       <div className="demo-bar" role="region" aria-label="演示模式">
-        <p><strong>演示模式</strong>：本地固定样例，签名由演示账户模拟，不会连接真实钱包或发送真实交易。</p>
+        <p><strong>演示模式</strong>：本地固定样例，操作只使用模拟账户，不会请求真实钱包签名或发送真实交易。</p>
         <div className="demo-ctl">
           <label>
             <span>演示签名账户</span>
@@ -120,20 +125,33 @@ function DemoApp({ branchId }: { branchId: string | null }) {
           </label>
           <button
             className="btn btn-quiet"
+            disabled={resetting}
             onClick={async () => {
-              localStorage.removeItem("w1.recovery.v1");
-              setAdapter(await FixtureAdapter.create({ reset: true }));
-              location.hash = "#/demo";
+              if (resetLock.current) return;
+              resetLock.current = true;
+              setResetting(true);
+              try {
+                const next = await FixtureAdapter.create({ reset: true });
+                try { localStorage.removeItem("w1.recovery.v1"); } catch { /* local hints are optional */ }
+                qc.removeQueries({ predicate: (q) => ["branches", "branch", "history", "proposals", "sponsorships", "caps"].includes(String(q.queryKey[0])) });
+                setAdapter(next);
+                setGeneration((n) => n + 1);
+                setWho(0);
+                setWrongNet(false);
+                setError(null);
+                location.hash = "#/demo";
+              } catch (e) { setError((e as Error).message); }
+              finally { resetLock.current = false; setResetting(false); }
             }}
           >
-            重置演示数据
+            {resetting ? "重置中…" : "重置演示数据"}
           </button>
         </div>
       </div>
       <main id="main" tabIndex={-1} className="page">
         {error && <p className="alert alert-error" role="alert">演示数据加载失败：{error}</p>}
         {!adapter && !error && <p className="state-line">正在加载演示数据…</p>}
-        {adapter && (branchId ? <Workspace key={branchId} adapter={adapter} branchId={branchId} account={account} /> : <ProjectList adapter={adapter} account={account} />)}
+        {adapter && (branchId ? <Workspace key={`${generation}:${branchId}`} adapter={adapter} branchId={branchId} account={account} /> : <ProjectList key={generation} adapter={adapter} account={account} />)}
       </main>
     </>
   );

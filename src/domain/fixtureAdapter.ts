@@ -65,7 +65,7 @@ interface State {
   branches: Branch[];
   checkpoints: Checkpoint[];
   proposals: Proposal[];
-  sponsorships: (Omit<Sponsorship, "maxFee"> & { maxFee: string; unknownResolves?: boolean })[];
+  sponsorships: (Omit<Sponsorship, "maxFee"> & { maxFee: string; unknownResolves?: boolean; retriedBy?: string })[];
   files: Record<string, StoredFile>; // key: producerJobId:path
   allowances: Record<string, string>; // account:spender -> amount
 }
@@ -135,12 +135,18 @@ async function seed(): Promise<State> {
   const tampered = await put("fx-job-s1", "tampered", "image", tamperedBytes, { serve: tamperedServe });
   const missing = await put("fx-job-s1", "missing", "document", utf8("# 不可用的文件\n"), { available: false });
   const fake = await put("fx-job-s1", "fake-png", "image", utf8(SVG_AS_PNG));
+  const broken = await put("fx-job-s1", "broken-png", "image", fromBase64(PNG_GREEN_B64).slice(0, 33));
+  const hugeBytes = fromBase64(PNG_GREEN_B64);
+  new DataView(hugeBytes.buffer).setUint32(16, 100000);
+  const oversized = await put("fx-job-s1", "oversized-png", "image", hugeBytes);
   const sAssets = [
     ver("evil-site", "html", 1, "fx-job-s1", evilHtml, sb, `${sb}:1`),
     ver("evil-notes", "document", 1, "fx-job-s1", evilMd, sb, `${sb}:1`),
     ver("tampered", "image", 1, "fx-job-s1", tampered, sb, `${sb}:1`),
     ver("missing", "document", 1, "fx-job-s1", missing, sb, `${sb}:1`),
     ver("fake-png", "image", 1, "fx-job-s1", fake, sb, `${sb}:1`),
+    ver("broken-png", "image", 1, "fx-job-s1", broken, sb, `${sb}:1`),
+    ver("oversized-png", "image", 1, "fx-job-s1", oversized, sb, `${sb}:1`),
   ];
   s.branches.push({
     id: sb, address: demoAddress(`w1-fixture-branch-${sb}`), projectTitle: "预览安全测试", goal: "用恶意与损坏的文件检查预览隔离与校验（演示数据）。",
@@ -159,6 +165,18 @@ export class FixtureAdapter implements RelayAdapter {
   readonly capabilities = { read: true, createBranch: true, propose: true, sponsor: true, fork: true, bindingRetry: true, realWalletSigning: false };
   controls: DemoControls = { rejectNextSignature: false, txOutcome: "ok", callbackOutcome: "missing" };
   private constructor(private s: State, private latency: number) {}
+  private purchases = new Set<string>();
+  private controlListeners = new Set<() => void>();
+  subscribeControls(listener: () => void) {
+    this.controlListeners.add(listener);
+    return () => { this.controlListeners.delete(listener); };
+  }
+
+  private assertIdle(branchId: string, retryId?: string) {
+    const outstanding = this.s.sponsorships.some((sp) => sp.branchId === branchId && sp.id !== retryId && !sp.retriedBy
+      && (sp.stages.purchase === "unknown" || sp.stages.purchase === "pending" || sp.stages.callback === "pending" || sp.stages.callback === "refused" || sp.stages.binding === "failed"));
+    if (outstanding || this.purchases.has(branchId)) throw new Error("分支有尚未完成的请求；保持等待或修正绑定，不可重新购买");
+  }
 
   static async create(opts: { latency?: number; reset?: boolean } = {}): Promise<FixtureAdapter> {
     let state: State | null = null;
@@ -195,6 +213,7 @@ export class FixtureAdapter implements RelayAdapter {
     if (account.chainId !== FIXTURE_CHAIN_ID) throw new Error("钱包网络与演示链不一致，请先切换网络");
     if (this.controls.rejectNextSignature) {
       this.controls.rejectNextSignature = false;
+      for (const listener of this.controlListeners) listener();
       throw new UserRejectedError();
     }
     const nonce = (this.s.nonces[account.address] ?? 0) + 1;
@@ -290,10 +309,15 @@ export class FixtureAdapter implements RelayAdapter {
     const b = this.branch(p.branchId);
     if (b.frozen) throw new Error("该分支的购买已冻结（未知失败或状态 2），不能再次购买");
     if (p.status !== "current" || p.anchor !== b.latestCheckpoint || quote.anchor !== b.latestCheckpoint) throw new StaleProposalError();
+    this.assertIdle(b.id);
+    if (quote.spender !== b.address || quote.parentJobId !== b.head) throw new Error("报价不属于当前分支");
     if (maxFee < PRICE) throw new Error("最高费用低于当前价格，交易会被拒绝");
     const allowance = BigInt(this.s.allowances[`${account.address}:${b.address}`] ?? "0");
     if (allowance < PRICE) throw new Error("授权额度不足，请先授权");
+    this.purchases.add(b.id);
+    try {
     const { hash, nonce } = await this.sign(account);
+    if (p.status !== "current" || p.anchor !== b.latestCheckpoint) throw new StaleProposalError();
     this.s.allowances[`${account.address}:${b.address}`] = "0"; // exact transfer, leftover cleared
     const sp: State["sponsorships"][number] = { id: this.id("fx-sp"), branchId: b.id, proposalId, sponsor: account.address, maxFee: maxFee.toString(), txHash: hash, nonce, attempt: 1, stages: freshStages(), note: null, checkpointId: null, updatedAt: now() };
     sp.stages.approval = "confirmed";
@@ -308,6 +332,7 @@ export class FixtureAdapter implements RelayAdapter {
     this.s.sponsorships.push(sp);
     this.save();
     return this.toSponsorship(sp);
+    } finally { this.purchases.delete(b.id); }
   }
 
   /** Moves a confirmed purchase through admission/execution/callback per the demo control. */
@@ -380,24 +405,35 @@ export class FixtureAdapter implements RelayAdapter {
     else if (p.kind === "document") bytes = utf8(`# ${p.targetKey}\n\n${p.requirement}\n\n输入：${inputs.map((i) => `${i.assetKey}@R${i.revision}`).join("、") || "无"}\n`);
     else {
       const imgs = inputs.filter((i) => i.kind === "image").map((i) => `<img alt="${i.assetKey}" src="data:image/png;base64,${this.s.files[`${i.producerJobId}:${i.descriptor.path}`]?.b64 ?? ""}">`);
-      bytes = utf8(`<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>${p.targetKey}</title></head><body><!-- marker:R${prev.revision + 1} --><h1>${p.targetKey}</h1><p>${p.requirement.replace(/[<>&]/g, "")}</p>${imgs.join("")}</body></html>\n`);
+      const target = inputs.find((i) => i.assetKey === p.targetKey && i.kind === "html");
+      const saved = target ? this.s.files[`${target.producerJobId}:${target.descriptor.path}`] : null;
+      const original = saved ? new TextDecoder().decode(fromBase64(saved.b64)) : `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>${p.targetKey}</title></head><body><h1>${p.targetKey}</h1></body></html>\n`;
+      const addition = `<!-- marker:R${prev.revision + 1} --><p>${p.requirement.replace(/[<>&]/g, "")}</p>${imgs.join("")}`;
+      bytes = utf8(original.replace(/<\/body>/i, `${addition}</body>`));
     }
     return { bytes, sha: await sha256Hex(bytes) };
   }
 
   async retryRefused(account: Account, sponsorshipId: string, maxFee: bigint) {
     const sp = this.s.sponsorships.find((x) => x.id === sponsorshipId);
-    if (!sp || sp.stages.callback !== "refused") throw new Error("只有经认证的状态 1 拒绝才允许重试");
+    if (!sp || sp.stages.callback !== "refused" || sp.retriedBy) throw new Error("只有未重试的经认证状态 1 拒绝才允许重试");
     const p = this.s.proposals.find((x) => x.id === sp.proposalId)!;
     const b = this.branch(sp.branchId);
     if (b.frozen) throw new Error("分支已冻结");
+    this.assertIdle(b.id, sp.id);
+    if (p.anchor !== b.latestCheckpoint) throw new StaleProposalError();
+    if (maxFee < PRICE) throw new Error("最高费用低于当前价格");
+    this.purchases.add(b.id);
+    try {
     const { hash, nonce } = await this.sign(account);
     const retry: State["sponsorships"][number] = { ...structuredClone(sp), id: this.id("fx-sp"), sponsor: account.address, maxFee: maxFee.toString(), txHash: hash, nonce, attempt: sp.attempt + 1, stages: freshStages(), note: null, updatedAt: now() };
     retry.stages.approval = "confirmed";
+    sp.retriedBy = retry.id;
     await this.advance(retry, p);
     this.s.sponsorships.push(retry);
     this.save();
     return this.toSponsorship(retry);
+    } finally { this.purchases.delete(b.id); }
   }
 
   async resubmitBinding(account: Account, sponsorshipId: string) {
@@ -426,7 +462,8 @@ export class FixtureAdapter implements RelayAdapter {
 
   async reconcile(record: RecoveryRecord) {
     await wait(this.latency);
-    const sp = this.s.sponsorships.find((x) => x.id === record.sponsorshipId && x.txHash === record.txHash && x.nonce === record.nonce);
+    if (record.adapterKind !== "fixture" || record.chainId !== FIXTURE_CHAIN_ID) return null;
+    const sp = this.s.sponsorships.find((x) => x.id === record.sponsorshipId && x.txHash === record.txHash && x.nonce === record.nonce && x.sponsor === record.account && x.branchId === record.branchId && x.proposalId === record.proposalId);
     if (!sp) return null;
     if (sp.stages.purchase === "unknown" && sp.unknownResolves) {
       sp.unknownResolves = false;

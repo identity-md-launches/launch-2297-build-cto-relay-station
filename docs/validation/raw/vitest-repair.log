@@ -1,0 +1,13 @@
+
+> cto-relay-station-w1@0.1.0 test:unit
+> vitest run
+
+
+ RUN  v5.0.5 /home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5
+
+
+ Test Files  2 passed (2)
+      Tests  25 passed (25)
+   Start at  14:10:10
+   Duration  2.89s (environment 40%, import 26%, tests 26%, setup 5%, transform 2%)
+

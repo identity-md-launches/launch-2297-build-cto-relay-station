@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import type { RelayAdapter } from "../domain/adapter";
 import { StaleProposalError, type Account, type Branch, type Checkpoint, type FeeQuote, type Proposal } from "../domain/types";
-import { CopyId, KIND_LABEL, formatTime, formatUnits, parseUnits, short } from "./format";
+import { CopyId, KIND_LABEL, formatTime, formatUnits, parseUnits } from "./format";
 import { saveRecovery } from "./recovery";
+import { useActionScope } from "./actionScope";
 
 interface Props { adapter: RelayAdapter; account: Account; branch: Branch; proposal: Proposal; latest: Checkpoint; onDone: () => void }
 
@@ -14,6 +15,8 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
   const [busy, setBusy] = useState<null | "approve" | "purchase" | "quote">("quote");
   const [err, setErr] = useState<string | null>(null);
   const lock = useRef(false);
+  const approvedAmount = useRef<bigint | null>(null);
+  const assertActive = useActionScope();
 
   useEffect(() => {
     let live = true;
@@ -30,8 +33,10 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
   /** Re-reads anchor and price right before a signature; refuses if either moved. */
   const fresh = async (): Promise<FeeQuote> => {
     const q = await adapter.quoteFee(proposal.id);
+    assertActive();
     setQuote(q);
     if (q.anchor !== proposal.anchor) throw new StaleProposalError();
+    if (q.price <= 0n || q.spender !== branch.address || q.action !== (branch.head ? "job.continue" : "job.open") || q.parentJobId !== branch.head) throw new Error("报价与当前分支、授权对象或父作业不一致，请重新读取");
     if (maxFeeWei === null || q.price > maxFeeWei) throw new Error(`价格已变为 ${formatUnits(q.price, q.decimals)} ${q.token}，高于你的最高费用，请重新确认`);
     return q;
   };
@@ -44,11 +49,16 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
     try {
       const q = await fresh();
       if (kind === "approve") {
-        await adapter.approve(account, q, maxFeeWei);
+        await adapter.approve(account, q, q.price);
+        approvedAmount.current = q.price;
         setStep("approved");
       } else {
+        if (approvedAmount.current === null || approvedAmount.current < q.price) {
+          setStep("review");
+          throw new Error("当前价格高于已确认的授权额度，请重新授权当前精确价格");
+        }
         const sp = await adapter.sponsor(account, proposal.id, maxFeeWei, q);
-        saveRecovery({ sponsorshipId: sp.id, branchId: branch.id, proposalId: proposal.id, account: account.address, txHash: sp.txHash, nonce: sp.nonce, savedAt: new Date().toISOString() });
+        saveRecovery({ sponsorshipId: sp.id, branchId: branch.id, proposalId: proposal.id, account: account.address, txHash: sp.txHash, nonce: sp.nonce, savedAt: new Date().toISOString(), chainId: account.chainId, adapterKind: adapter.kind });
         onDone();
       }
     } catch (e) {
@@ -69,22 +79,22 @@ export function SponsorPanel({ adapter, account, branch, proposal, latest, onDon
         <div><dt>提案</dt><dd><CopyId value={proposal.id} label="提案编号" /></dd></div>
         <div><dt>工作</dt><dd>{proposal.mode === "create" ? "新建" : "更新"}{KIND_LABEL[proposal.kind]} · 目标槽位 {proposal.targetKey}</dd></div>
         <div><dt>输入版本</dt><dd>{proposal.inputs.length ? proposal.inputs.map((i, n) => (
-          <span key={i.assetKey} className="block">{i.assetKey}@第 {i.revision} 轮 · SHA-256 {short(i.sha256)}{inputs[n] ? "" : "（不在当前检查点）"}</span>
+          <span key={i.assetKey} className="block">{i.assetKey}@第 {i.revision} 轮 · SHA-256 <CopyId value={i.sha256} label={`${i.assetKey} 输入 SHA-256`} />{inputs[n] ? "" : "（不在当前检查点）"}</span>
         )) : "无"}</dd></div>
         <div><dt>要求</dt><dd className="req">{proposal.requirement}</dd></div>
         <div><dt>分支</dt><dd>{branch.projectTitle} · 检查点 {proposal.anchor}</dd></div>
         <div><dt>发布影响</dt><dd>{proposal.publish ? "执行后请求发布网站；网址出现不代表内容被接受" : "不发布网站"}</dd></div>
         {quote && <>
           <div><dt>IMD 动作</dt><dd>{quote.action}{quote.parentJobId ? `，父作业 ${quote.parentJobId}` : "（分支首次执行）"}</dd></div>
-          <div><dt>当前价格</dt><dd>{formatUnits(quote.price, quote.decimals)} {quote.token} · 报价于 {formatTime(quote.quotedAt)}</dd></div>
+          <div><dt>当前价格</dt><dd>{formatUnits(quote.price, quote.decimals)} {quote.token} · 报价于 {formatTime(quote.quotedAt)} · 美元估值不可用</dd></div>
           <div><dt>授权对象</dt><dd>A1 分支合约 <CopyId value={quote.spender} label="授权对象地址" />（不是 IMD 作业合约）</dd></div>
         </>}
       </dl>
       {quote && (
         <label className="field">
           <span>最高费用（{quote.token}）</span>
-          <input inputMode="decimal" value={maxFee} onChange={(e) => { setMaxFee(e.target.value); setStep("review"); }} aria-invalid={!!feeErr} aria-describedby="fee-hint" />
-          <span id="fee-hint" className={feeErr ? "field-err" : "hint"}>{feeErr ?? "授权与购买都按这个上限；签名前会重新读取价格和检查点。"}</span>
+          <input inputMode="decimal" disabled={busy !== null} value={maxFee} onChange={(e) => { setMaxFee(e.target.value); setStep("review"); }} aria-invalid={!!feeErr} aria-describedby="fee-hint" />
+          <span id="fee-hint" className={feeErr ? "field-err" : "hint"}>{feeErr ?? "只授权当前精确价格，最高费用是购买上限；签名前会重新读取价格和检查点。"}</span>
         </label>
       )}
       {err && <p className="alert alert-error" role="alert">{err}</p>}

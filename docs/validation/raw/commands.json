@@ -1,0 +1,50 @@
+[
+  {
+    "label": "typecheck",
+    "command": [
+      "npm",
+      "run",
+      "typecheck"
+    ],
+    "startedAt": "2026-10-20T14:40:55.375Z",
+    "finishedAt": "2026-10-20T14:41:03.203Z",
+    "exitCode": 0
+  },
+  {
+    "label": "vitest",
+    "command": [
+      "npm",
+      "run",
+      "test:unit",
+      "--",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=docs/validation/raw/vitest.json"
+    ],
+    "startedAt": "2026-10-20T14:41:03.204Z",
+    "finishedAt": "2026-10-20T14:41:06.762Z",
+    "exitCode": 0
+  },
+  {
+    "label": "build",
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "startedAt": "2026-10-20T14:41:06.762Z",
+    "finishedAt": "2026-10-20T14:41:15.045Z",
+    "exitCode": 0
+  },
+  {
+    "label": "e2e",
+    "command": [
+      "/usr/bin/node",
+      "tests/run-browsers.mjs",
+      "--imd-chromium"
+    ],
+    "startedAt": "2026-10-20T14:41:15.046Z",
+    "finishedAt": "2026-10-20T14:44:25.619Z",
+    "exitCode": 0
+  }
+]

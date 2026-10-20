@@ -19,6 +19,10 @@ export function draftProblems(caps: Capabilities, latest: Checkpoint, d: { kind:
   if (d.mode === "update" && existing && existing.kind !== d.kind) out.push("更新的类型必须与目标资产一致");
   if (d.mode === "update" && !d.inputKeys.includes(d.targetKey)) out.push("更新时目标资产必须作为输入");
   if (d.inputKeys.length > caps.maxInputs) out.push(`输入最多 ${caps.maxInputs} 个`);
+  if (new Set(d.inputKeys).size !== d.inputKeys.length) out.push("输入资产不能重复");
+  if (d.inputKeys.some((key) => !latest.assets.some((a) => a.assetKey === key))) out.push("输入资产必须来自当前检查点");
+  if (caps.maxOutputs < 1) out.push("A1 配置不允许输出资产");
+  if (d.kind === "image" && d.mode === "update" && !caps.imageEditing) out.push("A1 未启用图片编辑，不能更新图片");
   if (d.kind === "image" && d.inputKeys.length > 0) out.push("A1 未启用图片参考或编辑，图片工作不能选择输入");
   if (!d.requirement.trim()) out.push("请写下这项工作的要求");
   const bytes = utf8Length(d.requirement);
@@ -41,6 +45,7 @@ export function ProposeForm({ adapter, account, branch, latest, caps, prefill, o
   const lock = useRef(false);
 
   const effectiveInputs = mode === "update" && targetKey && !inputs.includes(targetKey) ? [...inputs, targetKey] : inputs;
+  const effectivePublish = kind === "html" && caps.sitePublication && publish;
   const problems = draftProblems(caps, latest, { kind, mode, targetKey, inputKeys: effectiveInputs, requirement });
   const updatable = latest.assets.filter((a) => a.kind === kind);
   const wrongNet = account.chainId !== FIXTURE_CHAIN_ID;
@@ -51,7 +56,7 @@ export function ProposeForm({ adapter, account, branch, latest, caps, prefill, o
     lock.current = true;
     setBusy(true);
     try {
-      await adapter.propose(account, { branchId: branch.id, anchor: latest.id, kind, mode, targetKey, inputKeys: effectiveInputs, requirement, publish });
+      await adapter.propose(account, { branchId: branch.id, anchor: latest.id, kind, mode, targetKey, inputKeys: effectiveInputs, requirement, publish: effectivePublish });
       setMsg({ ok: true, text: "提案已提交。它与其他当前提案并列，等待任何人资助。" });
       setReview(false);
       setRequirement("");
@@ -134,7 +139,7 @@ export function ProposeForm({ adapter, account, branch, latest, caps, prefill, o
             <div><dt>工作</dt><dd>{mode === "create" ? "新建" : "更新"}{KIND_LABEL[kind]} · 槽位 {targetKey}</dd></div>
             <div><dt>输入版本</dt><dd>{effectiveInputs.length ? latest.assets.filter((a) => effectiveInputs.includes(a.assetKey)).map((a) => `${a.assetKey}@第 ${a.revision} 轮 ${short(a.descriptor.sha256)}`).join("、") : "无"}</dd></div>
             <div><dt>要求</dt><dd className="req">{requirement}</dd></div>
-            <div><dt>网站发布</dt><dd>{publish ? "开" : "关"}</dd></div>
+            <div><dt>网站发布</dt><dd>{effectivePublish ? "开" : "关"}</dd></div>
             <div><dt>绑定检查点</dt><dd>{latest.id}</dd></div>
             <div><dt>签名账户</dt><dd>{account.label} {short(account.address)}</dd></div>
             <div><dt>费用</dt><dd>只需 gas；执行需要之后单独资助</dd></div>

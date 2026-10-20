@@ -1,0 +1,17 @@
+[WebServer] (node:24) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:37) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 2 workers
+
+(node:58) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:57) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature (3.1s)
+  ✓  3 [webkit-desktop] › tests/e2e/w1.spec.ts:210:1 › malicious files stay isolated and broken files never get a verified badge (6.9s)
+  ✓  4 [webkit-desktop] › tests/e2e/wallet.spec.ts:42:1 › EIP-6963 named browser wallet connects on desktop and phone, switches chain and observes account changes (2.4s)
+  ✓  2 [webkit-desktop] › tests/e2e/journey.spec.ts:39:1 › two accounts execute all six functions with downloaded HTML-image-HTML retention and a historical fork (28.6s)
+
+  4 passed (30.8s)

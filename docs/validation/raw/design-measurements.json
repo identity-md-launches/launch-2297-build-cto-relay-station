@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "mode": "fixture-only",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "measurements": [
+    {
+      "name": "body",
+      "selector": "body",
+      "foreground": "rgb(27, 36, 32)",
+      "background": "rgb(246, 245, 241)",
+      "fontSize": "15px",
+      "weight": "400",
+      "ratio": 14.585,
+      "threshold": 4.5
+    },
+    {
+      "name": "primary button",
+      "selector": ".btn-primary:not(:disabled)",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(31, 95, 79)",
+      "fontSize": "15px",
+      "weight": "600",
+      "ratio": 7.479,
+      "threshold": 4.5
+    },
+    {
+      "name": "secondary metadata",
+      "selector": "#assets .meta",
+      "foreground": "rgb(79, 90, 85)",
+      "background": "rgb(246, 245, 241)",
+      "fontSize": "13px",
+      "weight": "400",
+      "ratio": 6.579,
+      "threshold": 4.5
+    },
+    {
+      "name": "demo warning",
+      "selector": ".demo-bar",
+      "foreground": "rgb(106, 74, 6)",
+      "background": "rgb(251, 240, 212)",
+      "fontSize": "13px",
+      "weight": "400",
+      "ratio": 7.136,
+      "threshold": 4.5
+    },
+    {
+      "name": "file verification error",
+      "selector": ".alert-error",
+      "foreground": "rgb(163, 48, 28)",
+      "background": "rgb(249, 227, 223)",
+      "fontSize": "15px",
+      "weight": "400",
+      "ratio": 5.7,
+      "threshold": 4.5
+    },
+    {
+      "name": "verified descriptor badge",
+      "selector": ".badge-ok",
+      "foreground": "rgb(23, 74, 61)",
+      "background": "rgb(227, 239, 233)",
+      "fontSize": "13px",
+      "weight": "400",
+      "ratio": 8.539,
+      "threshold": 4.5
+    }
+  ],
+  "mobileInputSize": "16px",
+  "workspaceShortcuts": {
+    "x": 28,
+    "y": 391.109375,
+    "width": 334,
+    "height": 44
+  },
+  "reducedMotion": "0s",
+  "pageErrors": [],
+  "externalRequests": [],
+  "limitations": "Opaque preview content, disabled states, all interactive backgrounds, native zoom and physical screen readers are outside this targeted contrast sample."
+}

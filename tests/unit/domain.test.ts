@@ -13,9 +13,15 @@ describe("live adapter (A1 not delivered)", () => {
     const a = createLiveAdapter();
     expect(a.status().state).toBe("A1_INTEGRATION_PENDING");
     expect(Object.values(a.capabilities).every((v) => v === false)).toBe(true);
-    await expect(a.listBranches()).rejects.toThrow("A1_INTEGRATION_PENDING");
-    await expect(a.sponsor(DEMO_ACCOUNTS[0], "x", 1n, {} as never)).rejects.toThrow("A1_INTEGRATION_PENDING");
-    await expect(a.fetchFile({} as never, "j")).rejects.toThrow("A1_INTEGRATION_PENDING");
+    for (const call of [
+      () => a.getCapabilities(), () => a.listBranches(), () => a.getBranch("x"),
+      () => a.getHistory("x"), () => a.getProposals("x"), () => a.getSponsorships("x"), () => a.quoteFee("x"),
+      () => a.createBranch(DEMO_ACCOUNTS[0], { title: "x", goal: "x" }),
+      () => a.propose(DEMO_ACCOUNTS[0], {} as never), () => a.approve(DEMO_ACCOUNTS[0], {} as never, 1n),
+      () => a.sponsor(DEMO_ACCOUNTS[0], "x", 1n, {} as never), () => a.retryRefused(DEMO_ACCOUNTS[0], "x", 1n),
+      () => a.resubmitBinding(DEMO_ACCOUNTS[0], "x"), () => a.fork(DEMO_ACCOUNTS[0], {} as never),
+      () => a.reconcile({} as never), () => a.fetchFile({} as never, "j"),
+    ]) await expect(call()).rejects.toThrow("A1_INTEGRATION_PENDING");
   });
 });
 
@@ -46,7 +52,8 @@ describe("preview isolation", () => {
   });
   it("puts a restrictive CSP first in generated HTML", () => {
     const doc = isolatedSrcDoc("<script>x</script>");
-    expect(doc.indexOf("Content-Security-Policy")).toBeLessThan(doc.indexOf("<script>"));
+    expect(doc).not.toContain("<script>");
+    expect(doc.indexOf("Content-Security-Policy")).toBeLessThan(doc.indexOf("<body>"));
     expect(doc).toContain("script-src 'none'");
     expect(doc).toContain("connect-src 'none'");
   });

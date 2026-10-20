@@ -1,0 +1,44 @@
+[WebServer] (node:24) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:37) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:57) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature (2.5s)
+
+
+  1) [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature 
+
+    Error: browser console errors
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "text": "Error checking Cross-Origin-Opener-Policy: Load failed",
+    +     "type": "error",
+    +   },
+    + ]
+
+       at harness.ts:24
+
+      22 |     expect(external, "unexpected network attempts (previews must stay offline)").toEqual([]);
+      23 |     expect(resources, "failed HTTP resources").toEqual([]);
+    > 24 |     expect(consoleErrors, "browser console errors").toEqual([]);
+         |                                                     ^
+      25 |   }, { auto: true }],
+      26 | });
+      27 |
+        at Object.base.extend.audit.auto (/home/seat7/.identitymd/work/ef76fd68-a952-4089-9c0e-29196eeb541d/e5e46acb-f5dd-49b5-890f-ec0ff37587b5/tests/e2e/harness.ts:24:53)
+
+    Error Context: test/scratch/browser-artifacts/w1-create-root-branch-with-2a994-e-click-sends-one-signature-webkit-desktop/error-context.md
+
+  1 failed
+    [webkit-desktop] › tests/e2e/w1.spec.ts:32:1 › create root branch with fixed goal (account A), double click sends one signature 

@@ -1,0 +1,460 @@
+{
+  "workerEvidenceOnly": true,
+  "generatedAt": "2026-10-20T14:46:16.597Z",
+  "w1BaseCommit": "588c1bd3d2a643f5f3893521adc828cdb7a8e89c",
+  "finalDeliveryCommit": null,
+  "note": "The network assigns the delivery commit. These SHA-256 pins identify the actual tested working-tree source and export.",
+  "integrationStatus": "A1_INTEGRATION_PENDING",
+  "a1": {
+    "job": "https://api.imd.fun/jobs/d5530989-b886-4f9d-80dd-44d26d85ffd2",
+    "observedAt": "2026-10-20T14:45:20.693Z",
+    "state": "executing",
+    "delivery": null,
+    "projectHead": null,
+    "submittedBodySha256FromAssignment": "3683b19c9c39d67b5c679641e4755e7914f471fe41329d1a3b2dfb1a34a58c77",
+    "submittedBodyPinVerification": "NOT_RUN: no exact submitted-body artifact supplied by public job metadata",
+    "actualRepo": null,
+    "actualCommit": null,
+    "importedFiles": [],
+    "localChain": "NOT_RUN",
+    "mainnet": "NOT_RUN",
+    "response": {
+      "path": "docs/validation/raw/a1-final.json",
+      "sha256": "8772383ffae17dd3465cadbf2ae86dc0e65a77f68dc0a128e3dc9306ccc7da53"
+    }
+  },
+  "checks": {
+    "commands": [
+      {
+        "label": "typecheck",
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "startedAt": "2026-10-20T14:40:55.375Z",
+        "finishedAt": "2026-10-20T14:41:03.203Z",
+        "exitCode": 0
+      },
+      {
+        "label": "vitest",
+        "command": [
+          "npm",
+          "run",
+          "test:unit",
+          "--",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=docs/validation/raw/vitest.json"
+        ],
+        "startedAt": "2026-10-20T14:41:03.204Z",
+        "finishedAt": "2026-10-20T14:41:06.762Z",
+        "exitCode": 0
+      },
+      {
+        "label": "build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "startedAt": "2026-10-20T14:41:06.762Z",
+        "finishedAt": "2026-10-20T14:41:15.045Z",
+        "exitCode": 0
+      },
+      {
+        "label": "e2e",
+        "command": [
+          "/usr/bin/node",
+          "tests/run-browsers.mjs",
+          "--imd-chromium"
+        ],
+        "startedAt": "2026-10-20T14:41:15.046Z",
+        "finishedAt": "2026-10-20T14:44:25.619Z",
+        "exitCode": 0
+      }
+    ],
+    "unit": {
+      "passed": 27,
+      "failed": 0
+    },
+    "browsers": {
+      "frameworkVersion": "1.64.1",
+      "startTime": "2026-10-20T14:41:16.318Z",
+      "duration": 189245.926,
+      "expected": 95,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0,
+      "perProject": {
+        "chromium-desktop": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "passed": 19
+        },
+        "chromium-mobile": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "passed": 19
+        },
+        "chromium-narrow": {
+          "viewport": {
+            "width": 320,
+            "height": 844
+          },
+          "passed": 19
+        },
+        "webkit-desktop": {
+          "viewport": {
+            "width": 1440,
+            "height": 900
+          },
+          "passed": 19
+        },
+        "webkit-mobile": {
+          "viewport": {
+            "width": 390,
+            "height": 844
+          },
+          "passed": 19
+        }
+      },
+      "expectedSecurityDenials": 13
+    },
+    "taste": {
+      "passed": 16,
+      "total": 16
+    },
+    "designSample": {
+      "passed": true,
+      "ratios": [
+        {
+          "name": "body",
+          "ratio": 14.585
+        },
+        {
+          "name": "primary button",
+          "ratio": 7.479
+        },
+        {
+          "name": "secondary metadata",
+          "ratio": 6.579
+        },
+        {
+          "name": "demo warning",
+          "ratio": 7.136
+        },
+        {
+          "name": "file verification error",
+          "ratio": 5.7
+        },
+        {
+          "name": "verified descriptor badge",
+          "ratio": 8.539
+        }
+      ]
+    },
+    "protectedConfigurationUnchanged": true
+  },
+  "pins": [
+    {
+      "path": "DESIGN.md",
+      "bytes": 7683,
+      "sha256": "23ba04a6a344e100e4b1e0e9c6a1b46ff15f3c6787ac20ef4598e8175b1a84b6"
+    },
+    {
+      "path": "dist/assets/dist-C0_OPqTa.js",
+      "bytes": 102692,
+      "sha256": "b1f6faedb6495840f8a7134cf4e0d9e6980b5124520aabde06e182e561f2ce14"
+    },
+    {
+      "path": "dist/assets/index-BGwPVQjO.js",
+      "bytes": 480868,
+      "sha256": "e3f0ea120c40f65b089f94b9d3c170242724ee153685751c196a3c811274073a"
+    },
+    {
+      "path": "dist/assets/index-DCBZ4oQ3.css",
+      "bytes": 12535,
+      "sha256": "3abfbe25ee0d82029028cd8fe423fab1331f03d8290acda83cf1fec1e9320ae2"
+    },
+    {
+      "path": "dist/favicon.svg",
+      "bytes": 246,
+      "sha256": "9e50a368b5ae8bf334623d3f2870ac64b034d2fca55ceb622d6bef4c09df6e01"
+    },
+    {
+      "path": "dist/index.html",
+      "bytes": 1347,
+      "sha256": "497c2d6e6afb7d8202b192d8f8b5676ec7020610cec375924ca559a72948d489"
+    },
+    {
+      "path": "dist/og.png",
+      "bytes": 33939,
+      "sha256": "4d38b6ec170bd3749f6c2d8d125683f10a98943617e756be4132a0bd33a62004"
+    },
+    {
+      "path": "docs/A1-HANDOFF.md",
+      "bytes": 6727,
+      "sha256": "d4bb50d6349ad0fdd8edc071e1866babfc660713b2c21b774c04506a9f0298b5"
+    },
+    {
+      "path": "docs/licenses/better-interface-LICENSE.txt",
+      "bytes": 11964,
+      "sha256": "97042f2887a04fc6c26967568cee2a17b3229d0f7e5e3c0b0ac877bef6932c39"
+    },
+    {
+      "path": "docs/licenses/eth-frontend-ux-LICENSE.txt",
+      "bytes": 1485,
+      "sha256": "e6cc8ae603f03b9cb8a6b97e0d904e19105e5b5eec6f45bf1df163398f006801"
+    },
+    {
+      "path": "docs/validation/README.md",
+      "bytes": 10414,
+      "sha256": "c1d4b2cbf1fe751fff804e97618018a4b55e93f7543f75afe920303ebd2502d1"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1247,
+      "sha256": "db61c4774951d882fe502520f2d0bff5b9c12abc08c9a14657cb8e7c043002b7"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 90501,
+      "sha256": "9ebd51773f6770f6560fa308ee94fd2a42d233d6df4bf7b847bbf27fd8db8d8c"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1363,
+      "sha256": "d90cac780b6dcb632eeaca37331050d808ccbecf4ba8ef5875097455d457266c"
+    },
+    {
+      "path": "playwright.config.ts",
+      "bytes": 1563,
+      "sha256": "a5338e527f20f9a633f0809734751a478c22ad793696ddbd7c08fcff3de3d805"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 246,
+      "sha256": "9e50a368b5ae8bf334623d3f2870ac64b034d2fca55ceb622d6bef4c09df6e01"
+    },
+    {
+      "path": "public/og.png",
+      "bytes": 33939,
+      "sha256": "4d38b6ec170bd3749f6c2d8d125683f10a98943617e756be4132a0bd33a62004"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6422,
+      "sha256": "b476c4953b3e3408845c932f5aa652ac3a034e91b0766f293cf3b12cf910c97e"
+    },
+    {
+      "path": "REVIEW.md",
+      "bytes": 13082,
+      "sha256": "587a13590729238140f80900fa20da479a66c668bdbcd8b511ebb94fa29b2361"
+    },
+    {
+      "path": "scripts/design-review.mjs",
+      "bytes": 4722,
+      "sha256": "d2edc9329af0d50d5474cd69878c587ab15d114df087c87065fb3c352cd0e678"
+    },
+    {
+      "path": "scripts/record-release.mjs",
+      "bytes": 6115,
+      "sha256": "137d9d5d42915fd0daf2b771087583d4e8a4e4fe49c8968de9ac36ebd8f19a12"
+    },
+    {
+      "path": "scripts/validate.mjs",
+      "bytes": 1471,
+      "sha256": "4bf72916df6423ef970cef398ca38461b17268857ab923faecab7757eab1b72c"
+    },
+    {
+      "path": "src/App.tsx",
+      "bytes": 7722,
+      "sha256": "59c88b2f8456a56fa2abbfaaf3f19064365a0f3433a0cbe2803099b7621abb81"
+    },
+    {
+      "path": "src/config.ts",
+      "bytes": 1012,
+      "sha256": "cee40094985e230d74c1e777c130f840c7073763d67f4ff1e77f53965e65a09c"
+    },
+    {
+      "path": "src/domain/adapter.ts",
+      "bytes": 2243,
+      "sha256": "c94b1f8a069da42a342ade4c9b307069e7184139e90c165acf5969fa338cff52"
+    },
+    {
+      "path": "src/domain/files.ts",
+      "bytes": 5469,
+      "sha256": "779896b24ab6748bc3526e3486fbbd0fd6ab569dad0197c8fc7a45c9cd95e962"
+    },
+    {
+      "path": "src/domain/fixtureAdapter.ts",
+      "bytes": 28148,
+      "sha256": "62e5d61c17af3393ad93fcc47275bc8bc78a2e03c2a5b2ee7f85694095b2f475"
+    },
+    {
+      "path": "src/domain/fixtures.ts",
+      "bytes": 3052,
+      "sha256": "12bb8df82166e9b05a370addef6fab7b3f96e5c2329c49be5df71d2a3de0173c"
+    },
+    {
+      "path": "src/domain/liveAdapter.ts",
+      "bytes": 1975,
+      "sha256": "2709e6d12f7df1e8e70e41c68f0608d3fb3a0ae4cf0731a50accfc30c6769b5c"
+    },
+    {
+      "path": "src/domain/types.ts",
+      "bytes": 5049,
+      "sha256": "dd7397d06331fb388bc61506a36d400ee43abe4842ff6fcbf9776e10b293b885"
+    },
+    {
+      "path": "src/main.tsx",
+      "bytes": 978,
+      "sha256": "afe7e91568096f2eada716aeb82e6f985d252f9580adb0d3e94015d665c75619"
+    },
+    {
+      "path": "src/preview/FilePreview.tsx",
+      "bytes": 5739,
+      "sha256": "273d304a133dfc9c8ad553d0e12668f257effc1bd5e7ce094d26b089d7e1414e"
+    },
+    {
+      "path": "src/preview/sanitize.ts",
+      "bytes": 3533,
+      "sha256": "2f31bec51ce2c3d1ba4984083a353439fc99f5b676a3acc0983e9d82f6948d00"
+    },
+    {
+      "path": "src/styles.css",
+      "bytes": 14834,
+      "sha256": "ba4812c1d9990946a7b7dad431340e6943b4c338fa440d75092795e98be67d0d"
+    },
+    {
+      "path": "src/ui/actionScope.ts",
+      "bytes": 430,
+      "sha256": "10d0a0302b524d6dd9615369c76e28cad3feaf3d32542290bcb3b017a23630e8"
+    },
+    {
+      "path": "src/ui/ErrorBoundary.tsx",
+      "bytes": 700,
+      "sha256": "d68a843ab1bfd03b21e687db8109029787a147648f9c8ae57aea203807b5aa85"
+    },
+    {
+      "path": "src/ui/format.tsx",
+      "bytes": 2326,
+      "sha256": "798d453e327db482ab8faf06cb1a64c3c6c1280a8e06336d74106e7f141e68d0"
+    },
+    {
+      "path": "src/ui/ProjectList.tsx",
+      "bytes": 6263,
+      "sha256": "43d147b5bb3bcb7fcc8493de834fb1bdd11138518e45807ae9ff1366c4b3d116"
+    },
+    {
+      "path": "src/ui/ProposeForm.tsx",
+      "bytes": 10190,
+      "sha256": "8acf51b1412f1a24353b9bca4b91480c39369f4d5c6e4d32c537586a8d8aa83f"
+    },
+    {
+      "path": "src/ui/recovery.ts",
+      "bytes": 1583,
+      "sha256": "fd671eed6016bf249af91d552bb3c8f629e9dd4e10d20f196b736af170b26248"
+    },
+    {
+      "path": "src/ui/SponsorPanel.tsx",
+      "bytes": 6762,
+      "sha256": "d68c73826a5d9e451f04f3d141154c92ed5d1f5741e36eb68bacf3cc0cb32899"
+    },
+    {
+      "path": "src/ui/Workspace.tsx",
+      "bytes": 23981,
+      "sha256": "c674b9d5b8762371a2a386c54a9c26a49023c37ad4d5be7ba68d0f438b7f6968"
+    },
+    {
+      "path": "src/wallet/ConnectSheet.tsx",
+      "bytes": 4954,
+      "sha256": "1ee0d3e5e4468fb72e5b237aec7dde5de37d3a6b3e5b1a184f739d11da015ce7"
+    },
+    {
+      "path": "src/wallet/icons.ts",
+      "bytes": 2501,
+      "sha256": "ce3d4cb0d72155fff7aa8125711e4a613c44e30452d42dd08d4337ae335b2fd8"
+    },
+    {
+      "path": "src/wallet/open-in.ts",
+      "bytes": 1406,
+      "sha256": "6d3d8a950271c9320b0dc8d84f6c68f9e3196871c8da6bbc49681fca948ec1e6"
+    },
+    {
+      "path": "src/wallet/wagmi.ts",
+      "bytes": 652,
+      "sha256": "cd5bcd649feb6d0d674af81714b94ff77b012053029a99cc809b0024deb14618"
+    },
+    {
+      "path": "tests/e2e/harness.ts",
+      "bytes": 2783,
+      "sha256": "41da6755c3decfa82020ebaae6fcb628e0925b89b4296edf419586d7faff1aba"
+    },
+    {
+      "path": "tests/e2e/journey.spec.ts",
+      "bytes": 14662,
+      "sha256": "62faf8f7942d3ec334e4d62de2c54b76e07f9943bff456c52b9f798b75b05561"
+    },
+    {
+      "path": "tests/e2e/layout.spec.ts",
+      "bytes": 4795,
+      "sha256": "aaae0c728d9f36a4315ce4a29765b3cb3013334b6941f68fe6994c7214efc283"
+    },
+    {
+      "path": "tests/e2e/w1.spec.ts",
+      "bytes": 17981,
+      "sha256": "19eed23f1c18049bbc7b02b1b160cf4e0a59eaee0c2243474ae0d63578e16794"
+    },
+    {
+      "path": "tests/e2e/wallet.spec.ts",
+      "bytes": 5706,
+      "sha256": "d792680c72adb5fd4ea04ef983360055148a4c8afe8a1346bd72251c7d65df14"
+    },
+    {
+      "path": "tests/run-browsers.mjs",
+      "bytes": 900,
+      "sha256": "fb33292e31dc094463460ed64beadb7ae03fed64b8d55cef15feafe84f11bb78"
+    },
+    {
+      "path": "tests/unit/domain.test.ts",
+      "bytes": 6820,
+      "sha256": "978ead546cb04f5593a39b9042e2238b9377cdbf2e3239330d15629b658392f7"
+    },
+    {
+      "path": "tests/unit/security.test.tsx",
+      "bytes": 13010,
+      "sha256": "fa7f567a3513c50b3a5a1d18680daa27509a72af194f1700184b07f638291c7c"
+    },
+    {
+      "path": "tests/unit/setup.ts",
+      "bytes": 43,
+      "sha256": "9b328c4843431fa76d8de00008fc159e95f99a840211085ff3b8f25e53d14409"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 576,
+      "sha256": "c47d55d63cb7986cdc7aff1e091a2b997bf7a91f76dc186cd169b71ce7ab8b91"
+    },
+    {
+      "path": "vite.config.ts",
+      "bytes": 394,
+      "sha256": "13a21c422f7bd2b1bfcd64ec29c1edc160e526b055f2c4c9798ef1506766d07f"
+    },
+    {
+      "path": "vitest.config.ts",
+      "bytes": 275,
+      "sha256": "6ea232d88bbc95bb112f63ba8afe03c7bf5191cb1c28145a798cdf82f73d9fbf"
+    }
+  ],
+  "bundle": {
+    "fileCount": 258,
+    "bytes": 6572189,
+    "limit": 8388608
+  }
+}

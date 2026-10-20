@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useAccount, useConnect, useDisconnect, useSwitchChain, type Connector } from "wagmi";
 import { WALLET_ICONS } from "./icons";
 import { OPEN_IN, isMobileBrowser } from "./open-in";
@@ -20,6 +21,8 @@ export function ConnectSheet() {
 
   useEffect(() => {
     if (!open) return;
+    const app = document.getElementById("root");
+    if (app) app.inert = true;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
       if (e.key === "Tab" && sheet.current) {
@@ -33,6 +36,7 @@ export function ConnectSheet() {
     addEventListener("keydown", onKey);
     sheet.current?.querySelector<HTMLElement>("button, a[href]")?.focus();
     return () => {
+      if (app) app.inert = false;
       removeEventListener("keydown", onKey);
       opener.current?.focus();
     };
@@ -49,7 +53,7 @@ export function ConnectSheet() {
     if (chainId !== WALLET_CHAIN.id)
       return (
         <div className="wallet-row">
-          <button className="btn btn-primary" disabled={switching} onClick={() => switchChain({ chainId: WALLET_CHAIN.id })}>
+          <button ref={opener} className="btn btn-primary" disabled={switching} onClick={() => switchChain({ chainId: WALLET_CHAIN.id })}>
             {switching ? "正在切换…" : `切换到 ${WALLET_CHAIN.name}`}
           </button>
           <button className="btn btn-quiet" onClick={() => disconnect()}>断开</button>
@@ -58,14 +62,14 @@ export function ConnectSheet() {
     return (
       <div className="wallet-row">
         <span className="wallet-addr mono" title={address}>{short(address)}</span>
-        <button className="btn btn-quiet" onClick={() => disconnect()}>断开</button>
+        <button ref={opener} className="btn btn-quiet" onClick={() => disconnect()}>断开</button>
       </div>
     );
   }
   return (
     <>
       <button ref={opener} className="btn btn-primary" onClick={() => { reset(); setOpen(true); }}>连接钱包</button>
-      {open && (
+      {open && createPortal(
         <div className="sheet-bg" onClick={() => setOpen(false)}>
           <div ref={sheet} className="sheet" role="dialog" aria-modal="true" aria-labelledby="connect-title" onClick={(e) => e.stopPropagation()}>
             <div className="sheet-head">
@@ -78,7 +82,7 @@ export function ConnectSheet() {
                 <span>在 {w.name} 中打开</span>
               </a>
             ))}
-            {listed.filter((c) => !mobile || c.type !== "injected").map((c) => (
+            {listed.map((c) => (
               <button key={c.uid} className="sheet-row" onClick={() => connect({ connector: c })} disabled={isPending}>
                 <span className="ic">{icon(c) ? <img width={28} height={28} src={icon(c)} alt="" /> : null}</span>
                 <span>{label(c)}{isPending && variables?.connector === c ? " · 正在打开…" : ""}</span>
@@ -86,7 +90,7 @@ export function ConnectSheet() {
             ))}
             {error && <p className="note" role="status">{/rejected|denied/i.test(error.message) ? "你在钱包中取消了连接。" : "钱包没有完成连接，请重试。"}</p>}
           </div>
-        </div>
+        </div>, document.body
       )}
     </>
   );
